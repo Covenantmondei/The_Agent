@@ -14,16 +14,18 @@ from ...services.auth import oauth
 from fastapi import Request
 from fastapi.responses import RedirectResponse
 import os
+import dotenv
+dotenv.load_dotenv()
 
 router = APIRouter(
     prefix='/auth',
     tags=['auth']
 )
 
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
-GOOGLE_REDIRECT_URI = "http://127.0.0.1/auth/callback/google"
-FRONTEND_URL = os.getenv("FRONTEND_URL")
+GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
+GOOGLE_REDIRECT_URI = "http://localhost:8000/auth/callback/google"
+FRONTEND_URL = os.environ.get("FRONTEND_URL")
 
 
 @router.get("/google")
