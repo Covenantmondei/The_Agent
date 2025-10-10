@@ -1,4 +1,4 @@
-from db.base import Base
+from ..base import Base
 from sqlalchemy import Column, Integer, String
 
 
@@ -9,4 +9,4 @@ class User(Base):
     google_sub = Column(String, unique=True, nullable=True)
     username = Column(String, unique=True)
     email = Column(String, unique=True)
-    hashed_password = Column(String)
+    hashed_password = Column(String, nullable=True)

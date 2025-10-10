@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class CreateUserRequest(BaseModel):
     username: str
+    email: str
     password: str
 
 
@@ -13,7 +14,7 @@ class Token(BaseModel):
 
 
 class GoogleUser(BaseModel):
-    sub: int
+    sub: str
     email: str
     name: str
     picture: str

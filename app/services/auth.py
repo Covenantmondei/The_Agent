@@ -105,7 +105,7 @@ def create_user_from_google_info(google_user: GoogleUser, db: Session):
 
     if existing_user:
 
-        existing_user.google_id = google_sub
+        existing_user.google_sub = google_sub
         db.commit()
         return existing_user
     else:
