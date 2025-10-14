@@ -6,11 +6,13 @@ from typing import Annotated
 from starlette import status
 from fastapi.security import OAuth2PasswordRequestForm
 from ...db.models.user import User
-from ...schemas.user import CreateUserRequest, GoogleUser, Token, RefreshTokenRequest
+from sqlalchemy.orm import Session
+from ...db.session import get_db
+from ...schemas.user import CreateUserRequest, GoogleUser, Token, RefreshTokenRequest, UserResponse
 from ...services.auth import create_access_token, authenticate_user, bcrypt_context, create_refresh_token, \
     create_user_from_google_info, get_user_by_google_sub, token_expired, decode_token, user_dependency
 from ...db.base import db_dependency
-from ...services.auth import oauth
+from ...services.auth import oauth, hash_password, verify_password
 from fastapi import Request
 from fastapi.responses import RedirectResponse
 import os
@@ -24,7 +26,7 @@ router = APIRouter(
 
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
-GOOGLE_REDIRECT_URI = "http://localhost:8000/auth/callback/google"
+GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/auth/callback/google"
 FRONTEND_URL = os.environ.get("FRONTEND_URL")
 
 
@@ -37,7 +39,10 @@ async def login_google(request: Request):
 async def auth_google(request: Request, db: db_dependency):
     try:
         user_response: OAuth2Token = await oauth.google.authorize_access_token(request)
-    except OAuthError:
+    # except OAuthError:
+    #     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+    except OAuthError as e:
+        print(e)
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
 
     user_info = user_response.get("userinfo")
@@ -61,17 +66,28 @@ async def auth_google(request: Request, db: db_dependency):
     return RedirectResponse(f"{FRONTEND_URL}/auth?access_token={access_token}&refresh_token={refresh_token}")
 
 
-@router.post("/create-user", status_code=status.HTTP_201_CREATED)
-async def create_user(db: db_dependency, create_user_request: CreateUserRequest):
-    create_user_model = User(
-        username=create_user_request.username,
-        hashed_password=bcrypt_context.hash(create_user_request.password)
-    )
+# @router.post("/register", status_code=status.HTTP_201_CREATED)
+# async def create_user(db: db_dependency, create_user_request: CreateUserRequest):
+#     create_user_model = User(
+#         username=create_user_request.username,
+#         hashed_password=bcrypt_context.hash(create_user_request.password)
+#     )
 
-    db.add(create_user_model)
+#     db.add(create_user_model)
+#     db.commit()
+
+#     return create_user_request
+
+@router.post("/register", response_model=UserResponse)
+def register(user: CreateUserRequest, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.email == user.email).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    new_user = User(email=user.email, full_name=user.full_name, hashed_password=hash_password(user.password))
+    db.add(new_user)
     db.commit()
-
-    return create_user_request
+    db.refresh(new_user)
+    return new_user
 
 
 @router.get("/get-user", status_code=status.HTTP_201_CREATED)
