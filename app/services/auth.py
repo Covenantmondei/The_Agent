@@ -16,9 +16,10 @@ from ..db.base import db_dependency
 
 ALGORITHM = "HS256"
 
-bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+bcrypt_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
-oauth_bearer = OAuth2PasswordBearer(tokenUrl="auth/token")
+oauth_bearer = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
@@ -32,18 +33,27 @@ oauth = OAuth(starlette_config)
 
 oauth.register(
     name='google',
-    client_id = GOOGLE_CLIENT_ID,
-    client_secret = GOOGLE_CLIENT_SECRET,
+    client_id=GOOGLE_CLIENT_ID,
+    client_secret=GOOGLE_CLIENT_SECRET,
     server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
-    client_kwargs={'scope': 'openid email profile'}
+    client_kwargs={
+        'scope': 'openid email profile https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/gmail.modify'
+    }
 )
 
 
 def hash_password(password: str):
-    return bcrypt_context.hash(password)
+    password_bytes = password.encode('utf-8')
+    if len(password_bytes) > 72:
+        password_bytes = password_bytes[:72]
+    return bcrypt_context.hash(password_bytes.decode('utf-8'))
 
-def verify_password(plain_password, hashed_password):
-    return bcrypt_context.verify(plain_password, hashed_password)
+
+def verify_password(plain_password: str, hashed_password: str):
+    password_bytes = plain_password.encode('utf-8')
+    if len(password_bytes) > 72:
+        password_bytes = password_bytes[:72]
+    return bcrypt_context.verify(password_bytes.decode('utf-8'), hashed_password)
 
 
 def authenticate_user(username: str, password: str, db: type[Session]):

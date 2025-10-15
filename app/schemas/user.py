@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 
 
@@ -7,12 +7,6 @@ class CreateUserRequest(BaseModel):
     email: str
     password: str
     full_name: Optional[str] = None
-
-
-class Token(BaseModel):
-    access_token: str
-    refresh_token: str
-    token_type: str
 
 
 class GoogleUser(BaseModel):
@@ -26,9 +20,17 @@ class RefreshTokenRequest(BaseModel):
     refresh_token: str
 
 
-class UserResponse(CreateUserRequest):
+class UserResponse(BaseModel):
     id: int
+    username: str
+    email: str
+    full_name: Optional[str] = None
     is_active: bool
+    
+    model_config = ConfigDict(from_attributes=True)
 
-    class Config:
-        orm_mode = True
+class Token(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str
+    user: UserResponse

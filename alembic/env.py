@@ -1,13 +1,27 @@
 from logging.config import fileConfig
 from app.db.base import Base
+# Import all models
+from app.db.models.user import User
+from app.db.models.task import Task
+from app.db.models.calendar import CalendarEvent
+from app.db.models.email_manage import EmailSummary, EmailActionItem
+
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
+import os
+from dotenv import load_dotenv
 
 from alembic import context
+
+# Load environment variables
+load_dotenv()
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+# Override sqlalchemy.url with environment variable
+config.set_main_option('sqlalchemy.url', os.environ.get('DATABASE_URL'))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

@@ -11,6 +11,9 @@ from dotenv import load_dotenv
 import logging
 import os
 
+# Import all models to register them with SQLAlchemy
+from app.db.models import User, Task, CalendarEvent, EmailSummary, EmailActionItem
+
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -36,6 +39,7 @@ app.include_router(auth_router)
 app.include_router(calendar_router)
 app.include_router(email_router)
 
+# Create tables
 Base.metadata.create_all(bind=engine)
 
 

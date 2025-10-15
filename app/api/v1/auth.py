@@ -39,31 +39,57 @@ async def login_google(request: Request):
 async def auth_google(request: Request, db: db_dependency):
     try:
         user_response: OAuth2Token = await oauth.google.authorize_access_token(request)
-    # except OAuthError:
-    #     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+        
+        # Add more detailed error logging
+        user_info = user_response.get("userinfo")
+        
+        if not user_info:
+            print("No user info received from Google")
+            raise HTTPException(status_code=400, detail="No user info from Google")
+        
+        print(f"Google user info: {user_info}")
+        
+        google_user = GoogleUser(**user_info)
+        
+        existing_user = get_user_by_google_sub(google_user.sub, db)
+        
+        if existing_user:
+            print(f"Existing user found: {existing_user.email}")
+            user = existing_user
+            
+            # Update Google tokens for existing user
+            user.google_access_token = user_response.get("access_token")
+            user.google_refresh_token = user_response.get("refresh_token")
+            db.commit()
+        else:
+            print("Creating new user from Google")
+            user = create_user_from_google_info(google_user, db)
+            
+            # Store Google tokens
+            user.google_access_token = user_response.get("access_token")
+            user.google_refresh_token = user_response.get("refresh_token")
+            db.commit()
+        
+        access_token = create_access_token(user.username, user.id, timedelta(days=7))
+        refresh_token = create_refresh_token(user.username, user.id, timedelta(days=14))
+        
+        return RedirectResponse(f"{FRONTEND_URL}auth?access_token={access_token}&refresh_token={refresh_token}")
+        
     except OAuthError as e:
-        print(e)
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
-
-    user_info = user_response.get("userinfo")
-
-    print(user_info)
-
-    google_user = GoogleUser(**user_info)
-
-    existing_user = get_user_by_google_sub(google_user.sub, db)
-
-    if existing_user:
-        print("Existing user")
-        user = existing_user
-    else:
-        print("Creating user")
-        user = create_user_from_google_info(google_user, db)
-
-    access_token = create_access_token(user.username, user.id, timedelta(days=7))
-    refresh_token = create_refresh_token(user.username, user.id, timedelta(days=14))
-
-    return RedirectResponse(f"{FRONTEND_URL}/auth?access_token={access_token}&refresh_token={refresh_token}")
+        print(f"OAuth Error: {e}")
+        print(f"Error description: {e.description if hasattr(e, 'description') else 'No description'}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail=f"OAuth error: {str(e)}"
+        )
+    except Exception as e:
+        print(f"Unexpected error: {type(e).__name__}: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Authentication failed: {str(e)}"
+        )
 
 
 # @router.post("/register", status_code=status.HTTP_201_CREATED)
@@ -78,24 +104,46 @@ async def auth_google(request: Request, db: db_dependency):
 
 #     return create_user_request
 
-@router.post("/register", response_model=UserResponse)
+@router.post("/register", response_model=Token)
 def register(user: CreateUserRequest, db: Session = Depends(get_db)):
+    # Check if email already exists
     db_user = db.query(User).filter(User.email == user.email).first()
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    new_user = User(email=user.email, full_name=user.full_name, hashed_password=hash_password(user.password))
+    
+    # Check if username already exists
+    db_user_username = db.query(User).filter(User.username == user.username).first()
+    if db_user_username:
+        raise HTTPException(status_code=400, detail="Username already taken")
+    
+    new_user = User(
+        username=user.username,
+        email=user.email,
+        full_name=user.full_name,
+        hashed_password=hash_password(user.password)
+    )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return new_user
+    
+    # Generate tokens for the newly registered user
+    access_token = create_access_token(new_user.username, new_user.id, timedelta(days=7))
+    refresh_token = create_refresh_token(new_user.username, new_user.id, timedelta(days=14))
+    
+    return {
+        "access_token": access_token, 
+        "refresh_token": refresh_token, 
+        "token_type": "bearer",
+        "user": new_user
+    }
 
 
-@router.get("/get-user", status_code=status.HTTP_201_CREATED)
+@router.get("/get-user", status_code=status.HTTP_200_OK)
 async def get_user(db: db_dependency, user: user_dependency):
     return user
 
 
-@router.post("/token", response_model=Token, status_code=status.HTTP_200_OK)
+@router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 async def login_for_access_token(db: db_dependency, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = authenticate_user(form_data.username, form_data.password, db)
 
@@ -105,7 +153,12 @@ async def login_for_access_token(db: db_dependency, form_data: Annotated[OAuth2P
     access_token = create_access_token(user.username, user.id, timedelta(days=7))
     refresh_token = create_refresh_token(user.username, user.id, timedelta(days=14))
 
-    return {"access_token": access_token, "refresh_token": refresh_token, "token_type": "bearer"}
+    return {
+            "access_token": access_token, 
+            "refresh_token": refresh_token, 
+            "token_type": "bearer",
+            "user": user
+        }
 
 
 @router.post("/refresh", response_model=Token)

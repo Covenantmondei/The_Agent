@@ -18,7 +18,7 @@ class User(Base):
     google_refresh_token = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     
-    # Relationships
-    tasks = relationship("Task", back_populates="user", cascade="all, delete-orphan")
-    calendar_events = relationship("CalendarEvent", back_populates="user", cascade="all, delete-orphan")
-    email_summaries = relationship("EmailSummary", back_populates="user", cascade="all, delete-orphan")
+    # Relationships - Use string references to avoid circular imports
+    tasks = relationship("Task", back_populates="user", cascade="all, delete-orphan", lazy="dynamic")
+    calendar_events = relationship("CalendarEvent", back_populates="user", cascade="all, delete-orphan", lazy="dynamic")
+    email_summaries = relationship("EmailSummary", back_populates="user", cascade="all, delete-orphan", lazy="dynamic")
