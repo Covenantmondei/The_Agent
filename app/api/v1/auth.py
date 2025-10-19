@@ -39,57 +39,59 @@ async def login_google(request: Request):
 async def auth_google(request: Request, db: db_dependency):
     try:
         user_response: OAuth2Token = await oauth.google.authorize_access_token(request)
+    except OAuthError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate google credentials")
         
-        # Add more detailed error logging
-        user_info = user_response.get("userinfo")
+    # Add more detailed error logging
+    user_info = user_response.get("userinfo")
+    
+    if not user_info:
+        print("No user info received from Google")
+        raise HTTPException(status_code=400, detail="No user info from Google")
+    
+    print(f"Google user info: {user_info}")
+    
+    google_user = GoogleUser(**user_info)
+    
+    existing_user = get_user_by_google_sub(google_user.sub, db)
+    
+    if existing_user:
+        print(f"Existing user found: {existing_user.email}")
+        user = existing_user
         
-        if not user_info:
-            print("No user info received from Google")
-            raise HTTPException(status_code=400, detail="No user info from Google")
+        # Update Google tokens for existing user
+        user.google_access_token = user_response.get("access_token")
+        user.google_refresh_token = user_response.get("refresh_token")
+        db.commit()
+    else:
+        print("Creating new user from Google")
+        user = create_user_from_google_info(google_user, db)
         
-        print(f"Google user info: {user_info}")
-        
-        google_user = GoogleUser(**user_info)
-        
-        existing_user = get_user_by_google_sub(google_user.sub, db)
-        
-        if existing_user:
-            print(f"Existing user found: {existing_user.email}")
-            user = existing_user
-            
-            # Update Google tokens for existing user
-            user.google_access_token = user_response.get("access_token")
-            user.google_refresh_token = user_response.get("refresh_token")
-            db.commit()
-        else:
-            print("Creating new user from Google")
-            user = create_user_from_google_info(google_user, db)
-            
-            # Store Google tokens
-            user.google_access_token = user_response.get("access_token")
-            user.google_refresh_token = user_response.get("refresh_token")
-            db.commit()
-        
-        access_token = create_access_token(user.username, user.id, timedelta(days=7))
-        refresh_token = create_refresh_token(user.username, user.id, timedelta(days=14))
-        
-        return RedirectResponse(f"{FRONTEND_URL}auth?access_token={access_token}&refresh_token={refresh_token}")
-        
-    except OAuthError as e:
-        print(f"OAuth Error: {e}")
-        print(f"Error description: {e.description if hasattr(e, 'description') else 'No description'}")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, 
-            detail=f"OAuth error: {str(e)}"
-        )
-    except Exception as e:
-        print(f"Unexpected error: {type(e).__name__}: {e}")
-        import traceback
-        traceback.print_exc()
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Authentication failed: {str(e)}"
-        )
+        # Store Google tokens
+        user.google_access_token = user_response.get("access_token")
+        user.google_refresh_token = user_response.get("refresh_token")
+        db.commit()
+    
+    access_token = create_access_token(user.username, user.id, timedelta(days=7))
+    refresh_token = create_refresh_token(user.username, user.id, timedelta(days=14))
+    
+    return RedirectResponse(f"{FRONTEND_URL}auth?access_token={access_token}&refresh_token={refresh_token}")
+    
+    # except OAuthError as e:
+    #     print(f"OAuth Error: {e}")
+    #     print(f"Error description: {e.description if hasattr(e, 'description') else 'No description'}")
+    #     raise HTTPException(
+    #         status_code=status.HTTP_401_UNAUTHORIZED, 
+    #         detail=f"OAuth error: {str(e)}"
+    #     )
+    # except Exception as e:
+    #     print(f"Unexpected error: {type(e).__name__}: {e}")
+    #     import traceback
+    #     traceback.print_exc()
+    #     raise HTTPException(
+    #         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+    #         detail=f"Authentication failed: {str(e)}"
+    #     )
 
 
 # @router.post("/register", status_code=status.HTTP_201_CREATED)
