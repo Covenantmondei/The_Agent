@@ -1,6 +1,7 @@
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from google.auth.exceptions import RefreshError
 from email.mime.text import MIMEText
 import base64
 import os
@@ -14,16 +15,33 @@ dotenv.load_dotenv()
 
 
 class GmailService:
-    def __init__(self, user):
+    def __init__(self, user, db=None):
         self.user = user
+        self.db = db
+        
+        if not user.google_refresh_token:
+            raise ValueError("User does not have a valid Google refresh token")
+        
         self.creds = Credentials(
             token=user.google_access_token,
             refresh_token=user.google_refresh_token,
             token_uri="https://oauth2.googleapis.com/token",
             client_id=os.environ.get("GOOGLE_CLIENT_ID"),
-            client_secret=os.environ.get("GOOGLE_CLIENT_SECRET")
+            client_secret=os.environ.get("GOOGLE_CLIENT_SECRET"),
+            scopes=[
+                'https://www.googleapis.com/auth/gmail.modify',
+                'https://www.googleapis.com/auth/gmail.readonly'
+            ]
         )
         self.service = build('gmail', 'v1', credentials=self.creds)
+
+    def _refresh_tokens_if_needed(self):
+        """Check if tokens were refreshed and update database"""
+        if self.db and self.creds.token != self.user.google_access_token:
+            self.user.google_access_token = self.creds.token
+            if self.creds.refresh_token:
+                self.user.google_refresh_token = self.creds.refresh_token
+            self.db.commit()
 
     def list_messages(self, max_results=10, query="is:unread"):
         """List emails with optional query filter"""
@@ -33,7 +51,11 @@ class GmailService:
                 maxResults=max_results,
                 q=query
             ).execute()
+            
+            self._refresh_tokens_if_needed()
             return results.get('messages', [])
+        except RefreshError as error:
+            raise Exception(f"Token refresh failed. User needs to re-authenticate: {error}")
         except HttpError as error:
             raise Exception(f"An error occurred: {error}")
 
@@ -53,6 +75,8 @@ class GmailService:
 
             # Extract body
             body = self._extract_body(message['payload'])
+            
+            self._refresh_tokens_if_needed()
 
             return {
                 'id': message_id,
@@ -63,6 +87,8 @@ class GmailService:
                 'snippet': message.get('snippet', ''),
                 'thread_id': message.get('threadId', '')
             }
+        except RefreshError as error:
+            raise Exception(f"Token refresh failed. User needs to re-authenticate: {error}")
         except HttpError as error:
             raise Exception(f"An error occurred: {error}")
 
@@ -99,6 +125,9 @@ class GmailService:
                 id=message_id,
                 body={'removeLabelIds': ['UNREAD']}
             ).execute()
+            self._refresh_tokens_if_needed()
+        except RefreshError as error:
+            raise Exception(f"Token refresh failed. User needs to re-authenticate: {error}")
         except HttpError as error:
             raise Exception(f"An error occurred: {error}")
 
@@ -130,7 +159,11 @@ class GmailService:
                 userId='me',
                 body={'raw': raw_message, 'threadId': reply_to_message_id}
             ).execute()
+            
+            self._refresh_tokens_if_needed()
             return send_message
+        except RefreshError as error:
+            raise Exception(f"Token refresh failed. User needs to re-authenticate: {error}")
         except HttpError as error:
             raise Exception(f"An error occurred: {error}")
 

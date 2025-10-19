@@ -20,9 +20,12 @@ async def get_unread_emails(user: user_dependency, db: db_dependency):
     if not user.google_access_token:
         raise HTTPException(status_code=400, detail="Gmail not connected")
     
-    gmail_service = GmailService(user)
+    if not user.google_refresh_token:
+        raise HTTPException(status_code=400, detail="Please reconnect your Google account")
     
     try:
+        gmail_service = GmailService(user, db)  # Pass db
+        
         processed_emails = gmail_service.fetch_and_process_unread_emails(max_results=20)
         
         # Store in database
@@ -64,6 +67,8 @@ async def get_unread_emails(user: user_dependency, db: db_dependency):
         
         return stored_emails
         
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

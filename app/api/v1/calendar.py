@@ -12,9 +12,17 @@ async def get_events(user: user_dependency, db: db_dependency):
     if not user.google_access_token:
         raise HTTPException(status_code=400, detail="Google Calendar not connected")
     
-    calendar_service = GoogleCalendarService(user)
-    events = calendar_service.fetch_events()
-    return {"events": events}
+    if not user.google_refresh_token:
+        raise HTTPException(status_code=400, detail="Please reconnect your Google account")
+    
+    try:
+        calendar_service = GoogleCalendarService(user, db)
+        events = calendar_service.fetch_events()
+        return {"events": events}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.post("/create", status_code=status.HTTP_201_CREATED)
@@ -27,15 +35,24 @@ async def create_event(
     if not user.google_access_token:
         raise HTTPException(status_code=400, detail="Google Calendar not connected")
     
-    calendar_service = GoogleCalendarService(user)
-    google_event = calendar_service.create_event(
-        title=event_data.title,
-        start_time=event_data.start_time,
-        end_time=event_data.end_time,
-        description=event_data.description
-    )
+    if not user.google_refresh_token:
+        raise HTTPException(status_code=400, detail="Please reconnect your Google account")
     
-    return {"message": "Event created", "event": google_event}
+    try:
+        calendar_service = GoogleCalendarService(user, db)
+        google_event = calendar_service.create_event(
+            title=event_data.title,
+            start_time=event_data.start_time,
+            end_time=event_data.end_time,
+            description=event_data.description,
+            location=event_data.location
+        )
+        
+        return {"message": "Event created", "event": google_event}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.put("/update/{event_id}")
@@ -46,14 +63,26 @@ async def update_event(
     db: db_dependency
 ):
     """Update existing calendar event"""
-    calendar_service = GoogleCalendarService(user)
-    updated_event = calendar_service.update_event(event_id, **event_data.dict(exclude_unset=True))
-    return {"message": "Event updated", "event": updated_event}
+    if not user.google_refresh_token:
+        raise HTTPException(status_code=400, detail="Please reconnect your Google account")
+    
+    try:
+        calendar_service = GoogleCalendarService(user, db)
+        updated_event = calendar_service.update_event(event_id, **event_data.dict(exclude_unset=True))
+        return {"message": "Event updated", "event": updated_event}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.delete("/delete/{event_id}")
 async def delete_event(event_id: str, user: user_dependency, db: db_dependency):
     """Delete calendar event"""
-    calendar_service = GoogleCalendarService(user)
-    calendar_service.delete_event(event_id)
-    return {"message": "Event deleted"}
+    if not user.google_refresh_token:
+        raise HTTPException(status_code=400, detail="Please reconnect your Google account")
+    
+    try:
+        calendar_service = GoogleCalendarService(user, db)
+        calendar_service.delete_event(event_id)
+        return {"message": "Event deleted"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

@@ -32,7 +32,13 @@ FRONTEND_URL = os.environ.get("FRONTEND_URL")
 
 @router.get("/google")
 async def login_google(request: Request):
-    return await oauth.google.authorize_redirect(request, GOOGLE_REDIRECT_URI)
+    # return await oauth.google.authorize_redirect(request, GOOGLE_REDIRECT_URI)
+    return await oauth.google.authorize_redirect(
+        request, 
+        GOOGLE_REDIRECT_URI,
+        access_type='offline',
+        prompt='consent'
+    )
 
 
 @router.get("/callback/google")
@@ -155,9 +161,16 @@ async def refresh_access_token(db: db_dependency, refresh_token_request: Refresh
     if token_expired(token):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Refresh token is expired.")
 
-    user = decode_token(token)
+    payload = decode_token(token)
 
-    access_token = create_access_token(user["sub"], user["id"], timedelta(days=7))
-    refresh_token = create_refresh_token(user["sub"], user["id"], timedelta(days=14))
+    user = db.query(User).filter(User.id == payload["id"]).first()
 
-    return {"access_token": access_token, "refresh_token": refresh_token, "token_type": "bearer"}
+    access_token = create_access_token(payload["sub"], payload["id"], timedelta(days=7))
+    refresh_token = create_refresh_token(payload["sub"], payload["id"], timedelta(days=14))
+
+    return {
+        "access_token": access_token, 
+        "refresh_token": refresh_token, 
+        "token_type": "bearer",
+        "user": user
+    }
