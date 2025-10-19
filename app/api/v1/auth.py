@@ -77,21 +77,6 @@ async def auth_google(request: Request, db: db_dependency):
     
     return RedirectResponse(f"{FRONTEND_URL}auth?access_token={access_token}&refresh_token={refresh_token}")
     
-    # except OAuthError as e:
-    #     print(f"OAuth Error: {e}")
-    #     print(f"Error description: {e.description if hasattr(e, 'description') else 'No description'}")
-    #     raise HTTPException(
-    #         status_code=status.HTTP_401_UNAUTHORIZED, 
-    #         detail=f"OAuth error: {str(e)}"
-    #     )
-    # except Exception as e:
-    #     print(f"Unexpected error: {type(e).__name__}: {e}")
-    #     import traceback
-    #     traceback.print_exc()
-    #     raise HTTPException(
-    #         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-    #         detail=f"Authentication failed: {str(e)}"
-    #     )
 
 
 # @router.post("/register", status_code=status.HTTP_201_CREATED)
