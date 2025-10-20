@@ -112,11 +112,23 @@ async def process_single_email(
     user: user_dependency,
     db: db_dependency
 ):
-    """Process a single email with AI"""
+    """Process a SINGLE email with AI when user clicks it"""
     if not user.google_access_token:
         raise HTTPException(status_code=400, detail="Gmail not connected")
     
-    gmail_service = GmailService(user)
+    # Check if already processed
+    existing = db.query(EmailSummary).filter(
+        EmailSummary.gmail_message_id == request.message_id,
+        EmailSummary.user_id == user.id
+    ).first()
+    
+    if existing:
+        return {
+            "message": "Email already processed",
+            "email_summary": existing
+        }
+    
+    gmail_service = GmailService(user, db)
     
     try:
         processed = gmail_service.process_email_with_ai(request.message_id)
@@ -149,9 +161,7 @@ async def process_single_email(
         
         return {
             "message": "Email processed successfully",
-            "email_summary_id": email_summary.id,
-            "summary": processed['summary'],
-            "drafted_reply": processed['drafted_reply']
+            "email_summary": email_summary
         }
         
     except Exception as e:
@@ -269,3 +279,41 @@ async def complete_action_item(
     db.commit()
     
     return {"message": "Action item marked as complete"}
+
+
+@router.get("/unread-list")
+async def get_unread_email_list(user: user_dependency, db: db_dependency, limit: int = 20):
+    if not user.google_access_token:
+        raise HTTPException(status_code=400, detail="Gmail not connected")
+    
+    if not user.google_refresh_token:
+        raise HTTPException(status_code=400, detail="Please reconnect your Google account")
+    
+    try:
+        gmail_service = GmailService(user, db)
+        
+        # Get message IDs only
+        unread_messages = gmail_service.list_messages(max_results=limit, query="is:unread")
+        
+        # Fetch basic info (subject, sender, date) - NO AI processing
+        email_list = []
+        for msg in unread_messages:
+            try:
+                email = gmail_service.get_message(msg['id'])
+                email_list.append({
+                    "message_id": msg['id'],
+                    "subject": email['subject'],
+                    "sender": email['sender'],
+                    "date": email['date'],
+                    "snippet": email['snippet']
+                })
+            except Exception as e:
+                print(f"Error fetching email {msg['id']}: {e}")
+                continue
+        
+        return {"emails": email_list, "count": len(email_list)}
+    
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
