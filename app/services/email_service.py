@@ -13,6 +13,38 @@ from .ai_processor import ai_processor
 
 dotenv.load_dotenv()
 
+# Match EXACTLY the scopes from auth.py OAuth registration
+GMAIL_SCOPES = [
+    'openid',
+    'email',
+    'profile',
+    'https://www.googleapis.com/auth/calendar',
+    'https://www.googleapis.com/auth/gmail.modify'
+]
+
+# Gmail category labels
+GMAIL_CATEGORIES = {
+    'CATEGORY_PERSONAL': 'primary',
+    'CATEGORY_SOCIAL': 'social',
+    'CATEGORY_PROMOTIONS': 'promotions',
+    'CATEGORY_UPDATES': 'updates',
+    'CATEGORY_FORUMS': 'forums',
+    'SPAM': 'spam',
+    'TRASH': 'trash'
+}
+
+# Priority mapping - higher number = higher priority
+PRIORITY_SCORES = {
+    'primary': 5,
+    'updates': 3,
+    'forums': 2,
+    'social': 2,
+    'promotions': 1,
+    'spam': 0,
+    'trash': 0,
+    'unknown': 3
+}
+
 
 class GmailService:
     def __init__(self, user, db=None):
@@ -22,45 +54,135 @@ class GmailService:
         if not user.google_refresh_token:
             raise ValueError("User does not have a valid Google refresh token")
         
+        # Use the EXACT same scopes that were authorized during OAuth
         self.creds = Credentials(
             token=user.google_access_token,
             refresh_token=user.google_refresh_token,
             token_uri="https://oauth2.googleapis.com/token",
             client_id=os.environ.get("GOOGLE_CLIENT_ID"),
             client_secret=os.environ.get("GOOGLE_CLIENT_SECRET"),
-            scopes=[
-                'https://www.googleapis.com/auth/gmail.modify',
-                'https://www.googleapis.com/auth/gmail.readonly'
-            ]
+            scopes=GMAIL_SCOPES
         )
-        self.service = build('gmail', 'v1', credentials=self.creds)
-
-    def _refresh_tokens_if_needed(self):
-        """Check if tokens were refreshed and update database"""
-        if self.db and self.creds.token != self.user.google_access_token:
-            self.user.google_access_token = self.creds.token
-            if self.creds.refresh_token:
-                self.user.google_refresh_token = self.creds.refresh_token
-            self.db.commit()
-
-    def list_messages(self, max_results=10, query="is:unread"):
-        """List emails with optional query filter"""
+        
         try:
-            results = self.service.users().messages().list(
-                userId='me',
-                maxResults=max_results,
-                q=query
-            ).execute()
+            self.service = build('gmail', 'v1', credentials=self.creds)
+        except Exception as e:
+            raise ValueError(f"Failed to build Gmail service: {str(e)}")
+
+    def refresh_tokens_if_needed(self):
+        try:
+            if self.db and self.creds.token != self.user.google_access_token:
+                self.user.google_access_token = self.creds.token
+                # Refresh token usually doesn't change, but update if it does
+                if self.creds.refresh_token and self.creds.refresh_token != self.user.google_refresh_token:
+                    self.user.google_refresh_token = self.creds.refresh_token
+                self.db.commit()
+                self.db.refresh(self.user)
+        except Exception as e:
+            print(f"Error updating tokens in database: {e}")
+
+    def get_category_from_labels(self, labels: List[str]) -> str:
+        if not labels:
+            return 'unknown'
+        
+        for label in labels:
+            if label in GMAIL_CATEGORIES:
+                return GMAIL_CATEGORIES[label]
+        
+        if 'INBOX' in labels and 'UNREAD' in labels:
+            return 'primary'
+        
+        return 'unknown'
+
+    def calculate_priority(self, category: str, labels: List[str], sender: str = '') -> int:
+        base_priority = PRIORITY_SCORES.get(category, 3)
+        
+        if 'IMPORTANT' in labels:
+            base_priority += 3
+        
+        if 'STARRED' in labels:
+            base_priority += 2
+        
+        if 'SPAM' in labels or 'TRASH' in labels:
+            base_priority = 0
+        
+        # You can add more rules here
+        # important_domains = ['@company.com', '@client.com']
+        # for domain in important_domains:
+        #     if domain in sender.lower():
+        #         base_priority += 2
+        #         break
+        
+        return min(base_priority, 10)
+
+    def list_messages(self, max_results=10, query="is:unread", page_token=None):
+        try:
+            params = {
+                'userId': 'me',
+                'maxResults': max_results,
+                'q': query
+            }
             
-            self._refresh_tokens_if_needed()
-            return results.get('messages', [])
+            if page_token:
+                params['pageToken'] = page_token
+            
+            results = self.service.users().messages().list(**params).execute()
+            
+            self.refresh_tokens_if_needed()
+            
+            return {
+                'messages': results.get('messages', []),
+                'next_page_token': results.get('nextPageToken'),
+                'result_size_estimate': results.get('resultSizeEstimate', 0)
+            }
+        except RefreshError as error:
+            raise Exception(f"Token refresh failed. User needs to re-authenticate: {error}")
+        except HttpError as error:
+            raise Exception(f"An error occurred: {error}")
+
+    def get_message_basic(self, message_id: str) -> Dict:
+        try:
+            message = self.service.users().messages().get(
+                userId='me',
+                id=message_id,
+                format='metadata',
+                metadataHeaders=['Subject', 'From', 'Date']
+            ).execute()
+
+            headers = message['payload']['headers']
+            subject = next((h['value'] for h in headers if h['name'].lower() == 'subject'), 'No Subject')
+            sender = next((h['value'] for h in headers if h['name'].lower() == 'from'), 'Unknown')
+            date = next((h['value'] for h in headers if h['name'].lower() == 'date'), '')
+
+            labels = message.get('labelIds', [])
+            category = self.get_category_from_labels(labels)
+            priority = self.calculate_priority(category, labels, sender)
+            
+            # Determine if reply is needed
+            requires_reply = category in ['primary', 'unknown'] and 'SENT' not in labels
+
+            self.refresh_tokens_if_needed()
+
+            return {
+                'id': message_id,
+                'subject': subject,
+                'sender': sender,
+                'date': date,
+                'snippet': message.get('snippet', ''),
+                'thread_id': message.get('threadId', ''),
+                'labels': labels,
+                'category': category,
+                'priority': priority,
+                'requires_reply': requires_reply,
+                'is_important': 'IMPORTANT' in labels,
+                'is_starred': 'STARRED' in labels
+            }
         except RefreshError as error:
             raise Exception(f"Token refresh failed. User needs to re-authenticate: {error}")
         except HttpError as error:
             raise Exception(f"An error occurred: {error}")
 
     def get_message(self, message_id: str) -> Dict:
-        """Get full email content and parse it"""
         try:
             message = self.service.users().messages().get(
                 userId='me',
@@ -74,9 +196,13 @@ class GmailService:
             date = next((h['value'] for h in headers if h['name'].lower() == 'date'), '')
 
             # Extract body
-            body = self._extract_body(message['payload'])
+            body = self.extract_body(message['payload'])
             
-            self._refresh_tokens_if_needed()
+            labels = message.get('labelIds', [])
+            category = self.get_category_from_labels(labels)
+            priority = self.calculate_priority(category, labels, sender)
+            
+            self.refresh_tokens_if_needed()
 
             return {
                 'id': message_id,
@@ -85,15 +211,17 @@ class GmailService:
                 'date': date,
                 'body': body,
                 'snippet': message.get('snippet', ''),
-                'thread_id': message.get('threadId', '')
+                'thread_id': message.get('threadId', ''),
+                'labels': labels,
+                'category': category,
+                'priority': priority
             }
         except RefreshError as error:
             raise Exception(f"Token refresh failed. User needs to re-authenticate: {error}")
         except HttpError as error:
             raise Exception(f"An error occurred: {error}")
 
-    def _extract_body(self, payload: Dict) -> str:
-        """Extract email body from payload"""
+    def extract_body(self, payload: Dict) -> str:
         body = ""
 
         if 'parts' in payload:
@@ -105,14 +233,14 @@ class GmailService:
                 elif part['mimeType'] == 'text/html':
                     if 'data' in part['body']:
                         html_body = base64.urlsafe_b64decode(part['body']['data']).decode('utf-8')
-                        body = self._html_to_text(html_body)
+                        body = self.html_to_text(html_body)
         else:
             if 'body' in payload and 'data' in payload['body']:
                 body = base64.urlsafe_b64decode(payload['body']['data']).decode('utf-8')
 
         return body.strip()
 
-    def _html_to_text(self, html: str) -> str:
+    def html_to_text(self, html: str) -> str:
         """Convert HTML to plain text"""
         soup = BeautifulSoup(html, 'html.parser')
         return soup.get_text(separator='\n', strip=True)
@@ -125,14 +253,13 @@ class GmailService:
                 id=message_id,
                 body={'removeLabelIds': ['UNREAD']}
             ).execute()
-            self._refresh_tokens_if_needed()
+            self.refresh_tokens_if_needed()
         except RefreshError as error:
             raise Exception(f"Token refresh failed. User needs to re-authenticate: {error}")
         except HttpError as error:
             raise Exception(f"An error occurred: {error}")
 
     def send_email(self, to: str, subject: str, body: str, reply_to_message_id: str = None):
-        """Send email via Gmail"""
         try:
             message = MIMEText(body)
             message['to'] = to
@@ -160,21 +287,78 @@ class GmailService:
                 body={'raw': raw_message, 'threadId': reply_to_message_id}
             ).execute()
             
-            self._refresh_tokens_if_needed()
+            self.refresh_tokens_if_needed()
             return send_message
         except RefreshError as error:
             raise Exception(f"Token refresh failed. User needs to re-authenticate: {error}")
         except HttpError as error:
             raise Exception(f"An error occurred: {error}")
 
-    def process_email_with_ai(self, message_id: str) -> Dict:
+    def list_unread_emails_paginated(
+        self, 
+        max_results: int = 20, 
+        page_token: str = None,
+        category_filter: str = None
+    ) -> Dict:
         """
-        Fetch email, summarize it, and draft a reply using AI
+        List unread emails with pagination and optional category filter - NO AI processing
+        Returns basic info only for fast loading, SORTED BY PRIORITY
+        """
+        # Build query
+        query = "is:unread"
         
-        Returns:
-            Dict with email details, summary, drafted reply, and action items
-        """
-        # Get email
+        # Add category filter if specified
+        if category_filter:
+            if category_filter == 'primary':
+                query += " category:primary"
+            elif category_filter == 'social':
+                query += " category:social"
+            elif category_filter == 'promotions':
+                query += " category:promotions"
+            elif category_filter == 'updates':
+                query += " category:updates"
+            elif category_filter == 'forums':
+                query += " category:forums"
+        
+        result = self.list_messages(max_results=max_results, query=query, page_token=page_token)
+        
+        emails = []
+        for msg in result['messages']:
+            try:
+                email_info = self.get_message_basic(msg['id'])
+                emails.append(email_info)
+            except Exception as e:
+                print(f"Error fetching email {msg['id']}: {e}")
+                continue
+        
+        # Sort by priority (highest first), then by date
+        emails.sort(key=lambda x: x['priority'], reverse=True)
+        
+        # Group by category for better organization
+        categorized_emails = {
+            'high_priority': [e for e in emails if e['priority'] >= 6],
+            'medium_priority': [e for e in emails if 3 <= e['priority'] < 6],
+            'low_priority': [e for e in emails if e['priority'] < 3],
+            'all': emails
+        }
+        
+        # Category counts
+        category_counts = {}
+        for email in emails:
+            cat = email['category']
+            category_counts[cat] = category_counts.get(cat, 0) + 1
+        
+        return {
+            'emails': emails,
+            'categorized': categorized_emails,
+            'category_counts': category_counts,
+            'next_page_token': result.get('next_page_token'),
+            'total_estimate': result.get('result_size_estimate', 0),
+            'count': len(emails)
+        }
+
+    def process_email_with_ai(self, message_id: str) -> Dict:
+
         email = self.get_message(message_id)
 
         # AI Processing
@@ -190,7 +374,7 @@ class GmailService:
             email['subject']
         )
 
-        category = ai_processor.categorize_email(
+        ai_category = ai_processor.categorize_email(
             email['body'],
             email['subject']
         )
@@ -201,26 +385,6 @@ class GmailService:
             **email,
             'summary': summary,
             'drafted_reply': drafted_reply,
-            'category': category,
+            'ai_category': ai_category,
             'action_items': action_items
         }
-
-    def fetch_and_process_unread_emails(self, max_results: int = 10) -> List[Dict]:
-        """
-        Fetch all unread emails and process them with AI
-        
-        Returns:
-            List of processed emails with summaries and drafted replies
-        """
-        unread_messages = self.list_messages(max_results=max_results, query="is:unread")
-        processed_emails = []
-
-        for msg in unread_messages:
-            try:
-                processed = self.process_email_with_ai(msg['id'])
-                processed_emails.append(processed)
-            except Exception as e:
-                print(f"Error processing email {msg['id']}: {e}")
-                continue
-
-        return processed_emails

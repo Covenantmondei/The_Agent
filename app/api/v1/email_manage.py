@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException, status, BackgroundTasks
-from typing import List
+from fastapi import APIRouter, HTTPException, status, BackgroundTasks, Query
+from typing import List, Optional
 from ...services.email_service import GmailService
 from ...services.auth import user_dependency
 from ...db.base import db_dependency
@@ -14,9 +14,15 @@ from ...db.models.email_manage import EmailSummary, EmailActionItem
 router = APIRouter(prefix='/email', tags=['email'])
 
 
-@router.get("/unread", response_model=List[EmailSummaryResponse])
-async def get_unread_emails(user: user_dependency, db: db_dependency):
-    """Fetch and process unread emails from Gmail"""
+@router.get("/unread-list")
+async def get_unread_email_list(
+    user: user_dependency, 
+    db: db_dependency, 
+    limit: int = Query(20, ge=1, le=100),
+    page_token: Optional[str] = None,
+    category: Optional[str] = Query(None, description="Filter by category: primary, social, promotions, updates, forums")
+):
+
     if not user.google_access_token:
         raise HTTPException(status_code=400, detail="Gmail not connected")
     
@@ -24,86 +30,52 @@ async def get_unread_emails(user: user_dependency, db: db_dependency):
         raise HTTPException(status_code=400, detail="Please reconnect your Google account")
     
     try:
-        gmail_service = GmailService(user, db)  # Pass db
+        gmail_service = GmailService(user, db)
         
-        processed_emails = gmail_service.fetch_and_process_unread_emails(max_results=20)
+        result = gmail_service.list_unread_emails_paginated(
+            max_results=limit, 
+            page_token=page_token,
+            category_filter=category
+        )
         
-        # Store in database
-        stored_emails = []
-        for email_data in processed_emails:
-            # Check if already exists
-            existing = db.query(EmailSummary).filter(
-                EmailSummary.gmail_message_id == email_data['id']
-            ).first()
-            
-            if not existing:
-                email_summary = EmailSummary(
-                    user_id=user.id,
-                    gmail_message_id=email_data['id'],
-                    thread_id=email_data.get('thread_id'),
-                    subject=email_data['subject'],
-                    sender=email_data['sender'],
-                    email_body=email_data['body'],
-                    summary=email_data['summary'],
-                    drafted_reply=email_data['drafted_reply'],
-                    category=email_data['category']
-                )
-                db.add(email_summary)
-                db.commit()
-                db.refresh(email_summary)
-                
-                # Add action items
-                for action_text in email_data.get('action_items', []):
-                    action_item = EmailActionItem(
-                        email_summary_id=email_summary.id,
-                        action_text=action_text
-                    )
-                    db.add(action_item)
-                
-                db.commit()
-                stored_emails.append(email_summary)
-            else:
-                stored_emails.append(existing)
-        
-        return stored_emails
-        
+        return result
+    
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.get("/summaries", response_model=List[EmailSummaryResponse])
-async def get_email_summaries(
-    user: user_dependency,
-    db: db_dependency,
-    skip: int = 0,
-    limit: int = 50
-):
-    """Get stored email summaries"""
-    summaries = db.query(EmailSummary).filter(
-        EmailSummary.user_id == user.id
-    ).offset(skip).limit(limit).all()
-    
-    return summaries
-
-
-@router.get("/summary/{email_summary_id}", response_model=EmailSummaryResponse)
-async def get_email_summary(
-    email_summary_id: int,
+@router.get("/categories")
+async def get_email_categories(
     user: user_dependency,
     db: db_dependency
 ):
-    """Get specific email summary"""
-    summary = db.query(EmailSummary).filter(
-        EmailSummary.id == email_summary_id,
-        EmailSummary.user_id == user.id
-    ).first()
+    """
+    Get summary of unread email counts by category
+    Useful for dashboard overview
+    """
+    if not user.google_access_token:
+        raise HTTPException(status_code=400, detail="Gmail not connected")
     
-    if not summary:
-        raise HTTPException(status_code=404, detail="Email summary not found")
+    try:
+        gmail_service = GmailService(user, db)
+        
+        # Fetch a larger batch to get accurate counts
+        result = gmail_service.list_unread_emails_paginated(max_results=100)
+        
+        return {
+            "category_counts": result['category_counts'],
+            "high_priority_count": len(result['categorized']['high_priority']),
+            "medium_priority_count": len(result['categorized']['medium_priority']),
+            "low_priority_count": len(result['categorized']['low_priority']),
+            "total_unread": result['count']
+        }
     
-    return summary
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.post("/process")
@@ -112,7 +84,7 @@ async def process_single_email(
     user: user_dependency,
     db: db_dependency
 ):
-    """Process a SINGLE email with AI when user clicks it"""
+
     if not user.google_access_token:
         raise HTTPException(status_code=400, detail="Gmail not connected")
     
@@ -143,7 +115,7 @@ async def process_single_email(
             email_body=processed['body'],
             summary=processed['summary'],
             drafted_reply=processed['drafted_reply'],
-            category=processed['category']
+            category=processed.get('ai_category', processed.get('category'))
         )
         db.add(email_summary)
         db.commit()
@@ -161,11 +133,64 @@ async def process_single_email(
         
         return {
             "message": "Email processed successfully",
-            "email_summary": email_summary
+            "email_summary": email_summary,
+            "priority": processed.get('priority'),
+            "requires_reply": processed.get('category') in ['primary', 'unknown']
         }
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/unread", response_model=List[EmailSummaryResponse])
+async def get_unread_emails(user: user_dependency, db: db_dependency):
+    """
+    DEPRECATED: Use /unread-list instead for better performance
+    Fetch and process unread emails from Gmail with AI
+    """
+    if not user.google_access_token:
+        raise HTTPException(status_code=400, detail="Gmail not connected")
+    
+    if not user.google_refresh_token:
+        raise HTTPException(status_code=400, detail="Please reconnect your Google account")
+    
+    raise HTTPException(
+        status_code=410, 
+        detail="This endpoint is deprecated. Use /email/unread-list to list emails, then /email/process to process individual emails."
+    )
+
+
+@router.get("/summaries", response_model=List[EmailSummaryResponse])
+async def get_email_summaries(
+    user: user_dependency,
+    db: db_dependency,
+    skip: int = 0,
+    limit: int = 50
+):
+    """Get stored email summaries from database"""
+    summaries = db.query(EmailSummary).filter(
+        EmailSummary.user_id == user.id
+    ).order_by(EmailSummary.created_at.desc()).offset(skip).limit(limit).all()
+    
+    return summaries
+
+
+@router.get("/summary/{email_summary_id}", response_model=EmailSummaryResponse)
+async def get_email_summary(
+    email_summary_id: int,
+    user: user_dependency,
+    db: db_dependency
+):
+    """Get specific email summary"""
+    summary = db.query(EmailSummary).filter(
+        EmailSummary.id == email_summary_id,
+        EmailSummary.user_id == user.id
+    ).first()
+    
+    if not summary:
+        raise HTTPException(status_code=404, detail="Email summary not found")
+    
+    return summary
 
 
 @router.post("/send-reply")
@@ -174,7 +199,6 @@ async def send_reply(
     user: user_dependency,
     db: db_dependency
 ):
-    """Send drafted reply to email"""
     if not user.google_access_token:
         raise HTTPException(status_code=400, detail="Gmail not connected")
     
@@ -187,7 +211,7 @@ async def send_reply(
     if not email_summary:
         raise HTTPException(status_code=404, detail="Email summary not found")
     
-    gmail_service = GmailService(user)
+    gmail_service = GmailService(user, db)
     
     try:
         # Use custom reply if provided, otherwise use drafted reply
@@ -233,7 +257,7 @@ async def mark_email_as_read(
         raise HTTPException(status_code=404, detail="Email summary not found")
     
     if user.google_access_token:
-        gmail_service = GmailService(user)
+        gmail_service = GmailService(user, db)
         try:
             gmail_service.mark_as_read(email_summary.gmail_message_id)
         except Exception as e:
@@ -279,41 +303,3 @@ async def complete_action_item(
     db.commit()
     
     return {"message": "Action item marked as complete"}
-
-
-@router.get("/unread-list")
-async def get_unread_email_list(user: user_dependency, db: db_dependency, limit: int = 20):
-    if not user.google_access_token:
-        raise HTTPException(status_code=400, detail="Gmail not connected")
-    
-    if not user.google_refresh_token:
-        raise HTTPException(status_code=400, detail="Please reconnect your Google account")
-    
-    try:
-        gmail_service = GmailService(user, db)
-        
-        # Get message IDs only
-        unread_messages = gmail_service.list_messages(max_results=limit, query="is:unread")
-        
-        # Fetch basic info (subject, sender, date) - NO AI processing
-        email_list = []
-        for msg in unread_messages:
-            try:
-                email = gmail_service.get_message(msg['id'])
-                email_list.append({
-                    "message_id": msg['id'],
-                    "subject": email['subject'],
-                    "sender": email['sender'],
-                    "date": email['date'],
-                    "snippet": email['snippet']
-                })
-            except Exception as e:
-                print(f"Error fetching email {msg['id']}: {e}")
-                continue
-        
-        return {"emails": email_list, "count": len(email_list)}
-    
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
