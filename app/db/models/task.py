@@ -12,8 +12,8 @@ class Task(Base):
     description = Column(Text, nullable=True)
     due_date = Column(DateTime, nullable=True)
     is_completed = Column(Boolean, default=False)
-    reminder_enabled = Column(Boolean, default=False)
-    reminder_time = Column(DateTime, nullable=True)
+    is_notified = Column(Boolean, default=False)
+    priority = Column(String, default="medium")
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     

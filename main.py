@@ -6,10 +6,13 @@ from app.db.base import Base
 from app.api.v1.auth import router as auth_router
 from app.api.v1.calendar import router as calendar_router
 from app.api.v1.email_manage import router as email_router
+from app.api.v1.task import router as task_router
+from app.services.scheduler import start_scheduler, shutdown_scheduler
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import logging
 import os
+import atexit
 
 # Import all models to register them with SQLAlchemy
 from app.db.models import User, Task, CalendarEvent, EmailSummary, EmailActionItem
@@ -38,9 +41,25 @@ app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
 app.include_router(auth_router)
 app.include_router(calendar_router)
 app.include_router(email_router)
-
+app.include_router(task_router)
+app.include_router(summary_router)
 # Create tables
 Base.metadata.create_all(bind=engine)
+
+
+@app.on_event("startup")
+async def startup_event():
+    start_scheduler()
+    logging.info("Application started - Task scheduler running")
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    shutdown_scheduler()
+    logging.info("Application shutdown - Scheduler stopped")
+
+
+atexit.register(shutdown_scheduler)
 
 
 @app.get("/", status_code=status.HTTP_200_OK)
@@ -52,7 +71,7 @@ async def root(user: user_dependency, db: db_dependency):
 
 @app.get("/health", status_code=status.HTTP_200_OK)
 async def health_check():
-    return {"status": "healthy"}
+    return {"status": "healthy", "scheduler": "running"}
 
 
 if __name__ == "__main__":

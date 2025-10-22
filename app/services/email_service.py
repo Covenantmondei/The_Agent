@@ -259,9 +259,11 @@ class GmailService:
         except HttpError as error:
             raise Exception(f"An error occurred: {error}")
 
-    def send_email(self, to: str, subject: str, body: str, reply_to_message_id: str = None):
+    def send_email(self, to: str, subject: str, body: str, reply_to_message_id: str = None, is_html: bool = True):
+
         try:
-            message = MIMEText(body)
+            # Create message with HTML or plain text
+            message = MIMEText(body, 'html' if is_html else 'plain')
             message['to'] = to
             message['subject'] = subject
 

@@ -22,3 +22,4 @@ class User(Base):
     tasks = relationship("Task", back_populates="user", cascade="all, delete-orphan", lazy="dynamic")
     calendar_events = relationship("CalendarEvent", back_populates="user", cascade="all, delete-orphan", lazy="dynamic")
     email_summaries = relationship("EmailSummary", back_populates="user", cascade="all, delete-orphan", lazy="dynamic")
+    daily_summaries = relationship("DailySummary", back_populates="user", cascade="all, delete-orphan", lazy="dynamic")
