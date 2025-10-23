@@ -16,6 +16,8 @@ from ..db.base import db_dependency
 
 ALGORITHM = "HS256"
 
+# TODO: "Implement Apple Oauth"
+
 # bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 bcrypt_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
