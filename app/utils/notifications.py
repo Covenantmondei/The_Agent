@@ -15,7 +15,6 @@ def send_task_reminder_email(
     task_description: Optional[str],
     due_date: datetime
 ):
-    # Send task reminder email using Gmail API
     db: Session = SessionLocal()
     try:
         user = db.query(User).filter(User.email == to_email).first()
@@ -73,6 +72,7 @@ def send_task_reminder_email(
         
     except Exception as e:
         logger.error(f"Error sending task reminder via Gmail: {e}")
+
         # Fallback to console notification
         print(f"\nTASK REMINDER:")
         print(f"To: {to_email}")
