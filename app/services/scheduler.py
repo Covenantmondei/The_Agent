@@ -9,8 +9,12 @@ from ..db.session import SessionLocal
 from ..utils.notifications import send_task_reminder_email
 from ..utils.logger import get_logger
 from .summary_service import generate_all_daily_summaries
+import logging
 
 logger = get_logger(__name__)
+
+# Reduce APScheduler logging noise
+logging.getLogger('apscheduler').setLevel(logging.WARNING)
 
 scheduler = BackgroundScheduler()
 

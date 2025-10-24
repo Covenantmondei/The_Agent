@@ -7,7 +7,9 @@ from app.api.v1.auth import router as auth_router
 from app.api.v1.calendar import router as calendar_router
 from app.api.v1.email_manage import router as email_router
 from app.api.v1.task import router as task_router
+from app.api.v1.summary import router as summary_router
 from app.services.scheduler import start_scheduler, shutdown_scheduler
+from app.services.ai_processor import preload_phi_model
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import logging
@@ -49,8 +51,13 @@ Base.metadata.create_all(bind=engine)
 
 @app.on_event("startup")
 async def startup_event():
+    """Initialize scheduler and warm up Ollama model on startup"""
     start_scheduler()
     logging.info("Application started - Task scheduler running")
+    
+    # Warm up Ollama model to avoid first-call delay
+    await preload_phi_model()
+    logging.info("Ollama model preloaded and ready")
 
 
 @app.on_event("shutdown")
