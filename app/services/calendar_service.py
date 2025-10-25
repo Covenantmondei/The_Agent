@@ -36,7 +36,11 @@ class GoogleCalendarService:
             client_secret=os.environ.get("GOOGLE_CLIENT_SECRET"),
             scopes=CALENDAR_SCOPES
         )
-        self.service = build('calendar', 'v3', credentials=self.creds)
+        
+        try:
+            self.service = build('calendar', 'v3', credentials=self.creds)
+        except Exception as e:
+            raise ValueError(f"Failed to build Calendar service: {str(e)}")
     
     def refresh_tokens(self):
         try:
@@ -67,7 +71,7 @@ class GoogleCalendarService:
         calendar_id: str = 'primary',
         query: str = None
     ) -> List[Dict]:
-        """Fetch events from Google Calendar with flexible filtering"""
+        # Fetch events from Google Calendar
         try:
             if not time_min:
                 time_min = datetime.utcnow()
@@ -96,7 +100,6 @@ class GoogleCalendarService:
             raise Exception(f"An error occurred: {error}")
     
     def get_event(self, event_id: str, calendar_id: str = 'primary') -> Dict:
-        """Get specific event details"""
         try:
             event = self.service.events().get(
                 calendarId=calendar_id,

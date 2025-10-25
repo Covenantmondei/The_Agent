@@ -8,16 +8,20 @@ from app.api.v1.calendar import router as calendar_router
 from app.api.v1.email_manage import router as email_router
 from app.api.v1.task import router as task_router
 from app.api.v1.summary import router as summary_router
+from app.api.v1.meeting import router as meeting_router
+from app.api.v1.meeting_ws import router as meeting_ws_router
 from app.services.scheduler import start_scheduler, shutdown_scheduler
-# from app.services.ai_processor import preload_phi_model
+from app.services.meeting_service import poll_calendar_for_meetings
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import logging
 import os
 import atexit
+import asyncio
 
 # Import all models to register them with SQLAlchemy
 from app.db.models import User, Task, CalendarEvent, EmailSummary, EmailActionItem
+from app.db.models.meeting import Meeting, MeetingTranscript, MeetingSummary  # NEW
 
 load_dotenv()
 
@@ -45,28 +49,30 @@ app.include_router(calendar_router)
 app.include_router(email_router)
 app.include_router(task_router)
 app.include_router(summary_router)
+app.include_router(meeting_router)
+app.include_router(meeting_ws_router) 
+
 # Create tables
 Base.metadata.create_all(bind=engine)
 
 
-# @app.on_event("startup")
-# async def startup_event():
-#     """Initialize scheduler and warm up Ollama model on startup"""
-#     start_scheduler()
-#     logging.info("Application started - Task scheduler running")
+@app.on_event("startup")
+async def startup_event():
+    start_scheduler()
+    logging.info("Application started - Task scheduler running")
     
-    # # Warm up Ollama model to avoid first-call delay
-    # await preload_phi_model()
-    # logging.info("Ollama model preloaded and ready")
+    # Start meeting calendar polling in background
+    asyncio.create_task(poll_calendar_for_meetings())
+    logging.info("Meeting calendar polling started")
 
 
-# @app.on_event("shutdown")
-# async def shutdown_event():
-#     shutdown_scheduler()
-#     logging.info("Application shutdown - Scheduler stopped")
+@app.on_event("shutdown")
+async def shutdown_event():
+    shutdown_scheduler()
+    logging.info("Application shutdown - Scheduler stopped")
 
 
-# atexit.register(shutdown_scheduler)
+atexit.register(shutdown_scheduler)
 
 
 @app.get("/", status_code=status.HTTP_200_OK)

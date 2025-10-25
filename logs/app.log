@@ -1,0 +1,589 @@
+2025-10-24 13:42:00 - app.services.ai_processor - WARNING - check_ollama:38 - Ollama service not available: Invalid URL 'None/api/tags': No scheme supplied. Perhaps you meant https://None/api/tags?
+2025-10-24 13:42:22 - app.services.ai_processor - WARNING - check_ollama:38 - Ollama service not available: Invalid URL 'None/api/tags': No scheme supplied. Perhaps you meant https://None/api/tags?
+2025-10-24 13:45:12 - app.services.ai_processor - WARNING - check_ollama:38 - Ollama service not available: Invalid URL 'None/api/tags': No scheme supplied. Perhaps you meant https://None/api/tags?
+2025-10-24 13:46:05 - app.services.ai_processor - WARNING - check_ollama:38 - Ollama service not available: Invalid URL 'None/api/tags': No scheme supplied. Perhaps you meant https://None/api/tags?
+2025-10-24 13:46:14 - app.services.scheduler - INFO - start_scheduler:116 - Scheduled: Check due tasks (every minute)
+2025-10-24 13:46:14 - app.services.scheduler - INFO - start_scheduler:125 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 13:46:14 - app.services.scheduler - INFO - start_scheduler:128 - Task scheduler started successfully with all jobs
+2025-10-24 13:51:35 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 1/2)...
+2025-10-24 13:51:35 - app.services.ai_processor - ERROR - call_ollama:119 - Ollama API error: Invalid URL 'None/api/generate': No scheme supplied. Perhaps you meant https://None/api/generate?
+2025-10-24 13:51:35 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 2/2)...
+2025-10-24 13:51:35 - app.services.ai_processor - ERROR - call_ollama:119 - Ollama API error: Invalid URL 'None/api/generate': No scheme supplied. Perhaps you meant https://None/api/generate?
+2025-10-24 13:51:35 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 1/2)...
+2025-10-24 13:51:35 - app.services.ai_processor - ERROR - call_ollama:119 - Ollama API error: Invalid URL 'None/api/generate': No scheme supplied. Perhaps you meant https://None/api/generate?
+2025-10-24 13:51:35 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 2/2)...
+2025-10-24 13:51:35 - app.services.ai_processor - ERROR - call_ollama:119 - Ollama API error: Invalid URL 'None/api/generate': No scheme supplied. Perhaps you meant https://None/api/generate?
+2025-10-24 13:51:35 - app.services.ai_processor - ERROR - draft_reply:272 - Error in draft_reply: 'AIProcessor' object has no attribute 'generate_reply'
+2025-10-24 13:55:03 - app.services.scheduler - INFO - shutdown_scheduler:138 - Task scheduler shutdown successfully
+2025-10-24 13:55:04 - app.services.scheduler - ERROR - shutdown_scheduler:140 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 14:14:57 - app.services.ai_processor - INFO - check_ollama:32 - Ollama service is available at http://localhost:11434
+2025-10-24 14:19:23 - app.services.ai_processor - INFO - check_ollama:32 - Ollama service is available at http://localhost:11434
+2025-10-24 14:19:33 - app.services.scheduler - INFO - start_scheduler:116 - Scheduled: Check due tasks (every minute)
+2025-10-24 14:19:33 - app.services.scheduler - INFO - start_scheduler:125 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 14:19:33 - app.services.scheduler - INFO - start_scheduler:128 - Task scheduler started successfully with all jobs
+2025-10-24 14:21:05 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 1/2)...
+2025-10-24 14:22:05 - app.services.ai_processor - ERROR - call_ollama:97 - Ollama API timeout (attempt 1/2)
+2025-10-24 14:22:05 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 2/2)...
+2025-10-24 14:23:05 - app.services.ai_processor - ERROR - call_ollama:97 - Ollama API timeout (attempt 2/2)
+2025-10-24 14:23:05 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 1/2)...
+2025-10-24 14:24:05 - app.services.ai_processor - ERROR - call_ollama:97 - Ollama API timeout (attempt 1/2)
+2025-10-24 14:24:05 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 2/2)...
+2025-10-24 14:25:06 - app.services.ai_processor - ERROR - call_ollama:97 - Ollama API timeout (attempt 2/2)
+2025-10-24 14:25:06 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 1/2)...
+2025-10-24 14:26:06 - app.services.ai_processor - ERROR - call_ollama:97 - Ollama API timeout (attempt 1/2)
+2025-10-24 14:26:06 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 2/2)...
+2025-10-24 14:27:06 - app.services.ai_processor - ERROR - call_ollama:97 - Ollama API timeout (attempt 2/2)
+2025-10-24 14:27:06 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 1/2)...
+2025-10-24 14:28:06 - app.services.ai_processor - ERROR - call_ollama:97 - Ollama API timeout (attempt 1/2)
+2025-10-24 14:28:06 - app.services.ai_processor - INFO - call_ollama:64 - Calling Ollama API (attempt 2/2)...
+2025-10-24 14:29:06 - app.services.ai_processor - ERROR - call_ollama:97 - Ollama API timeout (attempt 2/2)
+2025-10-24 14:29:06 - app.services.ai_processor - WARNING - extract_action_items:351 - Failed to extract action items
+2025-10-24 14:29:07 - app.services.scheduler - INFO - shutdown_scheduler:138 - Task scheduler shutdown successfully
+2025-10-24 14:29:07 - app.services.scheduler - ERROR - shutdown_scheduler:140 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 14:29:18 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 14:29:27 - app.services.scheduler - INFO - start_scheduler:116 - Scheduled: Check due tasks (every minute)
+2025-10-24 14:29:27 - app.services.scheduler - INFO - start_scheduler:125 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 14:29:27 - app.services.scheduler - INFO - start_scheduler:128 - Task scheduler started successfully with all jobs
+2025-10-24 14:29:29 - app.services.scheduler - INFO - shutdown_scheduler:138 - Task scheduler shutdown successfully
+2025-10-24 14:29:29 - app.services.scheduler - ERROR - shutdown_scheduler:140 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 14:29:56 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 14:30:09 - app.services.scheduler - INFO - start_scheduler:116 - Scheduled: Check due tasks (every minute)
+2025-10-24 14:30:09 - app.services.scheduler - INFO - start_scheduler:125 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 14:30:09 - app.services.scheduler - INFO - start_scheduler:128 - Task scheduler started successfully with all jobs
+2025-10-24 14:30:09 - app.services.scheduler - INFO - shutdown_scheduler:138 - Task scheduler shutdown successfully
+2025-10-24 14:30:09 - app.services.scheduler - ERROR - shutdown_scheduler:140 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 14:30:15 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 14:30:24 - app.services.scheduler - INFO - start_scheduler:116 - Scheduled: Check due tasks (every minute)
+2025-10-24 14:30:24 - app.services.scheduler - INFO - start_scheduler:125 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 14:30:24 - app.services.scheduler - INFO - start_scheduler:128 - Task scheduler started successfully with all jobs
+2025-10-24 14:33:13 - app.services.ai_processor - INFO - call_ollama:78 - Ollama API call successful (length: 536)
+2025-10-24 14:45:33 - app.services.ai_processor - INFO - call_ollama:78 - Ollama API call successful (length: 4695)
+2025-10-24 14:46:12 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 14:46:22 - app.services.scheduler - INFO - start_scheduler:116 - Scheduled: Check due tasks (every minute)
+2025-10-24 14:46:22 - app.services.scheduler - INFO - start_scheduler:125 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 14:46:22 - app.services.scheduler - INFO - start_scheduler:128 - Task scheduler started successfully with all jobs
+2025-10-24 14:46:23 - app.services.ai_processor - WARNING - call_ollama:76 - Response appears incomplete, retrying...
+2025-10-24 14:46:23 - app.services.ai_processor - INFO - call_ollama:78 - Ollama API call successful (length: 4)
+2025-10-24 14:47:42 - app.services.scheduler - INFO - shutdown_scheduler:138 - Task scheduler shutdown successfully
+2025-10-24 14:47:42 - app.services.scheduler - ERROR - shutdown_scheduler:140 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 14:47:56 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 14:48:04 - app.services.scheduler - INFO - start_scheduler:116 - Scheduled: Check due tasks (every minute)
+2025-10-24 14:48:04 - app.services.scheduler - INFO - start_scheduler:125 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 14:48:05 - app.services.scheduler - INFO - start_scheduler:128 - Task scheduler started successfully with all jobs
+2025-10-24 14:49:04 - app.services.scheduler - INFO - shutdown_scheduler:138 - Task scheduler shutdown successfully
+2025-10-24 14:49:04 - app.services.scheduler - ERROR - shutdown_scheduler:140 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 14:49:17 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 14:49:33 - app.services.scheduler - INFO - start_scheduler:116 - Scheduled: Check due tasks (every minute)
+2025-10-24 14:49:33 - app.services.scheduler - INFO - start_scheduler:125 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 14:49:33 - app.services.scheduler - INFO - start_scheduler:128 - Task scheduler started successfully with all jobs
+2025-10-24 14:49:33 - app.services.scheduler - INFO - shutdown_scheduler:138 - Task scheduler shutdown successfully
+2025-10-24 14:49:34 - app.services.scheduler - ERROR - shutdown_scheduler:140 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 14:49:43 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 14:49:54 - app.services.scheduler - INFO - start_scheduler:116 - Scheduled: Check due tasks (every minute)
+2025-10-24 14:49:54 - app.services.scheduler - INFO - start_scheduler:125 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 14:49:54 - app.services.scheduler - INFO - start_scheduler:128 - Task scheduler started successfully with all jobs
+2025-10-24 14:50:06 - app.services.ai_processor - INFO - call_ollama:59 - Calling Ollama API...
+2025-10-24 14:59:13 - app.services.ai_processor - INFO - call_ollama:80 - Ollama API call successful (length: 2509)
+2025-10-24 14:59:13 - app.services.ai_processor - INFO - call_ollama:59 - Calling Ollama API...
+2025-10-24 15:00:41 - app.services.ai_processor - INFO - call_ollama:80 - Ollama API call successful (length: 4)
+2025-10-24 15:00:41 - app.services.ai_processor - INFO - call_ollama:59 - Calling Ollama API...
+2025-10-24 15:03:17 - app.services.ai_processor - INFO - call_ollama:80 - Ollama API call successful (length: 143)
+2025-10-24 15:03:17 - app.services.ai_processor - INFO - extract_action_items:342 - Extracted 3 action items
+2025-10-24 15:03:21 - app.services.scheduler - INFO - shutdown_scheduler:138 - Task scheduler shutdown successfully
+2025-10-24 15:03:21 - app.services.scheduler - ERROR - shutdown_scheduler:140 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 15:03:38 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 15:03:51 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:03:51 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:03:51 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:06:09 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 15:06:09 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 15:06:34 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 15:06:46 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:06:46 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:06:46 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:14:11 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 15:20:11 - app.services.ai_processor - INFO - check_ollama:30 - Ollama service is available at http://localhost:11434
+2025-10-24 15:20:22 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:20:22 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:20:22 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:21:06 - app.services.ai_processor - INFO - call_ollama:59 - Calling Ollama API...
+2025-10-24 15:23:59 - app.services.ai_processor - INFO - call_ollama:80 - Ollama API call successful (length: 402)
+2025-10-24 15:23:59 - app.services.ai_processor - INFO - call_ollama:59 - Calling Ollama API...
+2025-10-24 15:24:59 - app.services.ai_processor - INFO - call_ollama:80 - Ollama API call successful (length: 4)
+2025-10-24 15:24:59 - app.services.ai_processor - INFO - call_ollama:59 - Calling Ollama API...
+2025-10-24 15:26:42 - app.services.ai_processor - INFO - call_ollama:80 - Ollama API call successful (length: 185)
+2025-10-24 15:26:42 - app.services.ai_processor - INFO - extract_action_items:342 - Extracted 3 action items
+2025-10-24 15:42:39 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 15:42:39 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 15:42:48 - app.services.ai_processor - INFO - __init__:31 - AIProcessor initialized with model: phi
+2025-10-24 15:42:48 - app.services.ai_processor - INFO - __init__:32 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 15:43:09 - app.services.ai_processor - INFO - __init__:30 - AIProcessor initialized with model: phi
+2025-10-24 15:43:09 - app.services.ai_processor - INFO - __init__:31 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 15:43:26 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:43:26 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:43:26 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:43:26 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 15:43:27 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 15:43:36 - app.services.ai_processor - INFO - __init__:25 - AIProcessor initialized with model: phi
+2025-10-24 15:43:36 - app.services.ai_processor - INFO - __init__:26 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 15:43:46 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:43:46 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:43:46 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:43:51 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 15:43:51 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 15:44:02 - app.services.ai_processor - INFO - __init__:25 - AIProcessor initialized with model: phi
+2025-10-24 15:44:02 - app.services.ai_processor - INFO - __init__:26 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 15:44:10 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:44:10 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:44:10 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:44:10 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 15:44:10 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 15:44:21 - app.services.ai_processor - INFO - __init__:25 - AIProcessor initialized with model: phi
+2025-10-24 15:44:21 - app.services.ai_processor - INFO - __init__:26 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 15:44:32 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:44:32 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:44:32 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:49:44 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 15:49:44 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 15:49:52 - app.services.ai_processor - INFO - __init__:30 - AIProcessor initialized with model: phi
+2025-10-24 15:49:52 - app.services.ai_processor - INFO - __init__:31 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 15:50:06 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:50:06 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:50:06 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:50:06 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 15:50:06 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 15:50:16 - app.services.ai_processor - INFO - __init__:30 - AIProcessor initialized with model: phi
+2025-10-24 15:50:16 - app.services.ai_processor - INFO - __init__:31 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 15:50:27 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:50:27 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:50:27 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:50:27 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 15:50:27 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 15:50:36 - app.services.ai_processor - INFO - __init__:30 - AIProcessor initialized with model: phi
+2025-10-24 15:50:36 - app.services.ai_processor - INFO - __init__:31 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 15:50:47 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:50:47 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:50:47 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:51:28 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 15:51:28 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 15:51:38 - app.services.ai_processor - INFO - __init__:30 - AIProcessor initialized with model: phi
+2025-10-24 15:51:38 - app.services.ai_processor - INFO - __init__:31 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 15:51:47 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 15:51:47 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 15:51:47 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 15:51:47 - app.services.ai_processor - INFO - preload_phi_model:239 - ============================================================
+2025-10-24 15:51:47 - app.services.ai_processor - INFO - preload_phi_model:240 - APPLICATION STARTUP - PRELOADING OLLAMA MODEL
+2025-10-24 15:51:47 - app.services.ai_processor - INFO - preload_phi_model:241 - ============================================================
+2025-10-24 15:51:47 - app.services.ai_processor - INFO - warm_up:201 - Warming up Ollama model...
+2025-10-24 15:51:50 - app.services.ai_processor - INFO - check_ollama:39 - Ollama service is available at http://localhost:11434
+2025-10-24 15:51:50 - app.services.ai_processor - INFO - summarize_email:135 - ============================================================
+2025-10-24 15:51:50 - app.services.ai_processor - INFO - summarize_email:136 - Starting email summarization
+2025-10-24 15:51:50 - app.services.ai_processor - INFO - summarize_email:137 - Email length: 53 characters
+2025-10-24 15:51:50 - app.services.ai_processor - INFO - summarize_email:160 - Streaming response from Ollama...
+2025-10-24 15:51:50 - app.services.ai_processor - INFO - stream_ollama_response:77 - Starting Ollama stream request to http://localhost:11434/api/generate
+2025-10-24 15:51:50 - app.services.ai_processor - INFO - stream_ollama_response:78 - Model: phi | Temperature: 0.5
+2025-10-24 15:51:57 - app.services.ai_processor - ERROR - stream_ollama_response:109 - Ollama request timed out
+2025-10-24 15:51:57 - app.services.ai_processor - INFO - summarize_email:180 - Summarization complete in 7.71s
+2025-10-24 15:51:57 - app.services.ai_processor - INFO - summarize_email:181 - Total chunks received: 1
+2025-10-24 15:51:57 - app.services.ai_processor - INFO - summarize_email:182 - Summary length: 30 characters
+2025-10-24 15:51:57 - app.services.ai_processor - INFO - summarize_email:183 - ============================================================
+2025-10-24 15:51:57 - app.services.ai_processor - INFO - warm_up:216 - Model warm-up completed successfully
+2025-10-24 15:51:57 - app.services.ai_processor - INFO - warm_up:217 - Warm-up summary: [Summary generation timed out]...
+2025-10-24 15:51:57 - app.services.ai_processor - INFO - preload_phi_model:245 - ============================================================
+2025-10-24 15:51:57 - app.services.ai_processor - INFO - preload_phi_model:246 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-24 15:51:57 - app.services.ai_processor - INFO - preload_phi_model:247 - ============================================================
+2025-10-24 15:52:24 - app.services.ai_processor - INFO - summarize_email:135 - ============================================================
+2025-10-24 15:52:24 - app.services.ai_processor - INFO - summarize_email:136 - Starting email summarization
+2025-10-24 15:52:24 - app.services.ai_processor - INFO - summarize_email:137 - Email length: 1013 characters
+2025-10-24 15:52:24 - app.services.ai_processor - INFO - summarize_email:160 - Streaming response from Ollama...
+2025-10-24 15:52:24 - app.services.ai_processor - INFO - stream_ollama_response:77 - Starting Ollama stream request to http://localhost:11434/api/generate
+2025-10-24 15:52:24 - app.services.ai_processor - INFO - stream_ollama_response:78 - Model: phi | Temperature: 0.5
+2025-10-24 15:52:31 - app.services.ai_processor - ERROR - stream_ollama_response:109 - Ollama request timed out
+2025-10-24 15:52:31 - app.services.ai_processor - INFO - summarize_email:180 - Summarization complete in 7.63s
+2025-10-24 15:52:31 - app.services.ai_processor - INFO - summarize_email:181 - Total chunks received: 1
+2025-10-24 15:52:31 - app.services.ai_processor - INFO - summarize_email:182 - Summary length: 30 characters
+2025-10-24 15:52:31 - app.services.ai_processor - INFO - summarize_email:183 - ============================================================
+2025-10-24 16:00:27 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 16:00:27 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 16:00:33 - app.services.ai_processor - INFO - __init__:30 - AIProcessor initialized with model: phi
+2025-10-24 16:00:33 - app.services.ai_processor - INFO - __init__:31 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 16:00:43 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 16:00:43 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 16:00:43 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 16:00:43 - app.services.ai_processor - INFO - preload_phi_model:224 - ============================================================
+2025-10-24 16:00:43 - app.services.ai_processor - INFO - preload_phi_model:225 - APPLICATION STARTUP - PRELOADING OLLAMA MODEL
+2025-10-24 16:00:43 - app.services.ai_processor - INFO - preload_phi_model:226 - ============================================================
+2025-10-24 16:00:43 - app.services.ai_processor - INFO - warm_up:193 - Warming up Ollama model...
+2025-10-24 16:00:47 - app.services.ai_processor - INFO - check_ollama:40 - Ollama service is available at http://localhost:11434
+2025-10-24 16:00:47 - app.services.ai_processor - INFO - summarize_email:135 - ============================================================
+2025-10-24 16:00:47 - app.services.ai_processor - INFO - summarize_email:136 - Starting email summarization
+2025-10-24 16:00:47 - app.services.ai_processor - INFO - summarize_email:137 - Email length: 53 characters
+2025-10-24 16:00:47 - app.services.ai_processor - INFO - summarize_email:157 - Streaming response from Ollama...
+2025-10-24 16:00:47 - app.services.ai_processor - INFO - stream_ollama_response:78 - Starting Ollama stream request to http://localhost:11434/api/generate
+2025-10-24 16:00:47 - app.services.ai_processor - INFO - stream_ollama_response:79 - Model: phi | Temperature: 0.5
+2025-10-24 16:02:29 - app.services.ai_processor - INFO - stream_ollama_response:90 - Stream connection established
+2025-10-24 16:02:38 - app.services.ai_processor - INFO - summarize_email:168 - Received 10 chunks (42 chars)
+2025-10-24 16:02:42 - app.services.ai_processor - INFO - summarize_email:168 - Received 20 chunks (99 chars)
+2025-10-24 16:02:47 - app.services.ai_processor - INFO - __init__:30 - AIProcessor initialized with model: phi
+2025-10-24 16:02:47 - app.services.ai_processor - INFO - __init__:31 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 16:02:47 - app.services.ai_processor - INFO - summarize_email:168 - Received 30 chunks (144 chars)
+2025-10-24 16:02:53 - app.services.ai_processor - INFO - summarize_email:168 - Received 40 chunks (192 chars)
+2025-10-24 16:02:56 - app.services.ai_processor - INFO - summarize_email:168 - Received 50 chunks (246 chars)
+2025-10-24 16:02:58 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 16:02:58 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 16:02:58 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 16:02:58 - app.services.ai_processor - INFO - preload_phi_model:224 - ============================================================
+2025-10-24 16:02:58 - app.services.ai_processor - INFO - preload_phi_model:225 - APPLICATION STARTUP - PRELOADING OLLAMA MODEL
+2025-10-24 16:02:58 - app.services.ai_processor - INFO - preload_phi_model:226 - ============================================================
+2025-10-24 16:02:58 - app.services.ai_processor - INFO - warm_up:193 - Warming up Ollama model...
+2025-10-24 16:03:00 - app.services.ai_processor - INFO - summarize_email:168 - Received 60 chunks (281 chars)
+2025-10-24 16:03:00 - app.services.ai_processor - INFO - check_ollama:40 - Ollama service is available at http://localhost:11434
+2025-10-24 16:03:00 - app.services.ai_processor - INFO - summarize_email:135 - ============================================================
+2025-10-24 16:03:00 - app.services.ai_processor - INFO - summarize_email:136 - Starting email summarization
+2025-10-24 16:03:00 - app.services.ai_processor - INFO - summarize_email:137 - Email length: 53 characters
+2025-10-24 16:03:00 - app.services.ai_processor - INFO - summarize_email:157 - Streaming response from Ollama...
+2025-10-24 16:03:00 - app.services.ai_processor - INFO - stream_ollama_response:78 - Starting Ollama stream request to http://localhost:11434/api/generate
+2025-10-24 16:03:00 - app.services.ai_processor - INFO - stream_ollama_response:79 - Model: phi | Temperature: 0.5
+2025-10-24 16:03:05 - app.services.ai_processor - INFO - summarize_email:168 - Received 70 chunks (331 chars)
+2025-10-24 16:03:08 - app.services.ai_processor - INFO - summarize_email:168 - Received 80 chunks (380 chars)
+2025-10-24 16:03:13 - app.services.ai_processor - INFO - summarize_email:168 - Received 90 chunks (427 chars)
+2025-10-24 16:03:17 - app.services.ai_processor - INFO - summarize_email:168 - Received 100 chunks (471 chars)
+2025-10-24 16:03:27 - app.services.ai_processor - INFO - summarize_email:168 - Received 110 chunks (506 chars)
+2025-10-24 16:03:37 - app.services.ai_processor - INFO - summarize_email:168 - Received 120 chunks (561 chars)
+2025-10-24 16:03:47 - app.services.ai_processor - INFO - summarize_email:168 - Received 130 chunks (610 chars)
+2025-10-24 16:03:55 - app.services.ai_processor - INFO - summarize_email:168 - Received 140 chunks (649 chars)
+2025-10-24 16:04:01 - app.services.ai_processor - INFO - summarize_email:168 - Received 150 chunks (693 chars)
+2025-10-24 16:04:07 - app.services.ai_processor - INFO - summarize_email:168 - Received 160 chunks (744 chars)
+2025-10-24 16:04:11 - app.services.ai_processor - INFO - summarize_email:168 - Received 170 chunks (780 chars)
+2025-10-24 16:04:17 - app.services.ai_processor - INFO - summarize_email:168 - Received 180 chunks (840 chars)
+2025-10-24 16:04:22 - app.services.ai_processor - INFO - summarize_email:168 - Received 190 chunks (894 chars)
+2025-10-24 16:04:28 - app.services.ai_processor - INFO - summarize_email:168 - Received 200 chunks (945 chars)
+2025-10-24 16:04:32 - app.services.ai_processor - INFO - summarize_email:168 - Received 210 chunks (985 chars)
+2025-10-24 16:04:40 - app.services.ai_processor - INFO - summarize_email:168 - Received 220 chunks (1039 chars)
+2025-10-24 16:04:48 - app.services.ai_processor - INFO - summarize_email:168 - Received 230 chunks (1087 chars)
+2025-10-24 16:04:52 - app.services.ai_processor - INFO - summarize_email:168 - Received 240 chunks (1118 chars)
+2025-10-24 16:04:57 - app.services.ai_processor - INFO - summarize_email:168 - Received 250 chunks (1169 chars)
+2025-10-24 16:05:02 - app.services.ai_processor - INFO - summarize_email:168 - Received 260 chunks (1220 chars)
+2025-10-24 16:05:06 - app.services.ai_processor - INFO - summarize_email:168 - Received 270 chunks (1271 chars)
+2025-10-24 16:05:12 - app.services.ai_processor - INFO - summarize_email:168 - Received 280 chunks (1331 chars)
+2025-10-24 16:05:16 - app.services.ai_processor - INFO - summarize_email:168 - Received 290 chunks (1385 chars)
+2025-10-24 16:05:20 - app.services.ai_processor - INFO - summarize_email:168 - Received 300 chunks (1420 chars)
+2025-10-24 16:05:24 - app.services.ai_processor - INFO - summarize_email:168 - Received 310 chunks (1469 chars)
+2025-10-24 16:05:29 - app.services.ai_processor - INFO - summarize_email:168 - Received 320 chunks (1513 chars)
+2025-10-24 16:05:34 - app.services.ai_processor - INFO - summarize_email:168 - Received 330 chunks (1553 chars)
+2025-10-24 16:05:40 - app.services.ai_processor - INFO - summarize_email:168 - Received 340 chunks (1602 chars)
+2025-10-24 16:05:47 - app.services.ai_processor - INFO - summarize_email:168 - Received 350 chunks (1634 chars)
+2025-10-24 16:05:54 - app.services.ai_processor - INFO - summarize_email:168 - Received 360 chunks (1670 chars)
+2025-10-24 16:06:00 - app.services.ai_processor - INFO - summarize_email:168 - Received 370 chunks (1718 chars)
+2025-10-24 16:06:06 - app.services.ai_processor - INFO - summarize_email:168 - Received 380 chunks (1771 chars)
+2025-10-24 16:06:10 - app.services.ai_processor - INFO - stream_ollama_response:109 - Stream completed successfully
+2025-10-24 16:06:10 - app.services.ai_processor - INFO - summarize_email:174 - Summarization complete in 322.98s
+2025-10-24 16:06:10 - app.services.ai_processor - INFO - summarize_email:175 - Total chunks received: 386
+2025-10-24 16:06:10 - app.services.ai_processor - INFO - summarize_email:176 - Summary length: 1788 characters
+2025-10-24 16:06:10 - app.services.ai_processor - INFO - summarize_email:177 - ============================================================
+2025-10-24 16:06:10 - app.services.ai_processor - INFO - warm_up:206 - Model warm-up completed successfully
+2025-10-24 16:06:10 - app.services.ai_processor - INFO - warm_up:207 - Warm-up summary: The email is a test email used to warm up the mode...
+2025-10-24 16:06:10 - app.services.ai_processor - INFO - preload_phi_model:230 - ============================================================
+2025-10-24 16:06:10 - app.services.ai_processor - INFO - preload_phi_model:231 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-24 16:06:10 - app.services.ai_processor - INFO - preload_phi_model:232 - ============================================================
+2025-10-24 16:06:10 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 16:06:10 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 16:06:18 - app.services.ai_processor - INFO - __init__:30 - AIProcessor initialized with model: phi
+2025-10-24 16:06:18 - app.services.ai_processor - INFO - __init__:31 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 16:06:29 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 16:06:29 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 16:06:29 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 16:06:29 - app.services.ai_processor - INFO - preload_phi_model:224 - ============================================================
+2025-10-24 16:06:29 - app.services.ai_processor - INFO - preload_phi_model:225 - APPLICATION STARTUP - PRELOADING OLLAMA MODEL
+2025-10-24 16:06:29 - app.services.ai_processor - INFO - preload_phi_model:226 - ============================================================
+2025-10-24 16:06:29 - app.services.ai_processor - INFO - warm_up:193 - Warming up Ollama model...
+2025-10-24 16:06:31 - app.services.ai_processor - INFO - check_ollama:40 - Ollama service is available at http://localhost:11434
+2025-10-24 16:06:31 - app.services.ai_processor - INFO - summarize_email:135 - ============================================================
+2025-10-24 16:06:31 - app.services.ai_processor - INFO - summarize_email:136 - Starting email summarization
+2025-10-24 16:06:31 - app.services.ai_processor - INFO - summarize_email:137 - Email length: 53 characters
+2025-10-24 16:06:31 - app.services.ai_processor - INFO - summarize_email:157 - Streaming response from Ollama...
+2025-10-24 16:06:31 - app.services.ai_processor - INFO - stream_ollama_response:78 - Starting Ollama stream request to http://localhost:11434/api/generate
+2025-10-24 16:06:31 - app.services.ai_processor - INFO - stream_ollama_response:79 - Model: phi | Temperature: 0.5
+2025-10-24 16:06:36 - app.services.ai_processor - INFO - stream_ollama_response:90 - Stream connection established
+2025-10-24 16:06:41 - app.services.ai_processor - INFO - summarize_email:168 - Received 10 chunks (38 chars)
+2025-10-24 16:06:46 - app.services.ai_processor - INFO - summarize_email:168 - Received 20 chunks (75 chars)
+2025-10-24 16:06:46 - app.services.ai_processor - INFO - stream_ollama_response:109 - Stream completed successfully
+2025-10-24 16:06:47 - app.services.ai_processor - INFO - summarize_email:174 - Summarization complete in 15.07s
+2025-10-24 16:06:47 - app.services.ai_processor - INFO - summarize_email:175 - Total chunks received: 20
+2025-10-24 16:06:47 - app.services.ai_processor - INFO - summarize_email:176 - Summary length: 73 characters
+2025-10-24 16:06:47 - app.services.ai_processor - INFO - summarize_email:177 - ============================================================
+2025-10-24 16:06:47 - app.services.ai_processor - INFO - warm_up:206 - Model warm-up completed successfully
+2025-10-24 16:06:47 - app.services.ai_processor - INFO - warm_up:207 - Warm-up summary: The summary of the email is: "This is a test email...
+2025-10-24 16:06:47 - app.services.ai_processor - INFO - preload_phi_model:230 - ============================================================
+2025-10-24 16:06:47 - app.services.ai_processor - INFO - preload_phi_model:231 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-24 16:06:47 - app.services.ai_processor - INFO - preload_phi_model:232 - ============================================================
+2025-10-24 16:07:36 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 16:07:36 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 16:08:09 - app.services.ai_processor - INFO - __init__:30 - AIProcessor initialized with model: phi
+2025-10-24 16:08:09 - app.services.ai_processor - INFO - __init__:31 - Ollama endpoint: http://localhost:11434/api/generate
+2025-10-24 16:08:20 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 16:08:20 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 16:08:20 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 16:08:20 - app.services.ai_processor - INFO - preload_phi_model:224 - ============================================================
+2025-10-24 16:08:20 - app.services.ai_processor - INFO - preload_phi_model:225 - APPLICATION STARTUP - PRELOADING OLLAMA MODEL
+2025-10-24 16:08:20 - app.services.ai_processor - INFO - preload_phi_model:226 - ============================================================
+2025-10-24 16:08:20 - app.services.ai_processor - INFO - warm_up:193 - Warming up Ollama model...
+2025-10-24 16:08:23 - app.services.ai_processor - INFO - check_ollama:40 - Ollama service is available at http://localhost:11434
+2025-10-24 16:08:23 - app.services.ai_processor - INFO - summarize_email:135 - ============================================================
+2025-10-24 16:08:23 - app.services.ai_processor - INFO - summarize_email:136 - Starting email summarization
+2025-10-24 16:08:23 - app.services.ai_processor - INFO - summarize_email:137 - Email length: 53 characters
+2025-10-24 16:08:23 - app.services.ai_processor - INFO - summarize_email:157 - Streaming response from Ollama...
+2025-10-24 16:08:23 - app.services.ai_processor - INFO - stream_ollama_response:78 - Starting Ollama stream request to http://localhost:11434/api/generate
+2025-10-24 16:08:23 - app.services.ai_processor - INFO - stream_ollama_response:79 - Model: phi | Temperature: 0.5
+2025-10-24 16:08:26 - app.services.ai_processor - INFO - stream_ollama_response:90 - Stream connection established
+2025-10-24 16:08:30 - app.services.ai_processor - INFO - summarize_email:168 - Received 10 chunks (43 chars)
+2025-10-24 16:08:33 - app.services.ai_processor - INFO - summarize_email:168 - Received 20 chunks (89 chars)
+2025-10-24 16:08:35 - app.services.ai_processor - INFO - stream_ollama_response:109 - Stream completed successfully
+2025-10-24 16:08:35 - app.services.ai_processor - INFO - summarize_email:174 - Summarization complete in 12.39s
+2025-10-24 16:08:35 - app.services.ai_processor - INFO - summarize_email:175 - Total chunks received: 21
+2025-10-24 16:08:35 - app.services.ai_processor - INFO - summarize_email:176 - Summary length: 88 characters
+2025-10-24 16:08:35 - app.services.ai_processor - INFO - summarize_email:177 - ============================================================
+2025-10-24 16:08:35 - app.services.ai_processor - INFO - warm_up:206 - Model warm-up completed successfully
+2025-10-24 16:08:35 - app.services.ai_processor - INFO - warm_up:207 - Warm-up summary: The email is a test message to warm up the model. ...
+2025-10-24 16:08:35 - app.services.ai_processor - INFO - preload_phi_model:230 - ============================================================
+2025-10-24 16:08:35 - app.services.ai_processor - INFO - preload_phi_model:231 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-24 16:08:35 - app.services.ai_processor - INFO - preload_phi_model:232 - ============================================================
+2025-10-24 22:12:04 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized with OpenAI model: None
+2025-10-24 22:39:48 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized with OpenAI model: ai/llama3.2:1B-Q4_0
+2025-10-24 22:40:40 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized with OpenAI model: ai/llama3.2:1B-Q4_0
+2025-10-24 22:41:34 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized with OpenAI model: ai/llama3.2:1B-Q4_0
+2025-10-24 22:42:07 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized with OpenAI model: ai/llama3.2:1B-Q4_0
+2025-10-24 22:42:27 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized with OpenAI model: ai/llama3.2:1B-Q4_0
+2025-10-24 22:42:27 - app.services.ai_processor - INFO - summarize_email:38 - ============================================================
+2025-10-24 22:42:27 - app.services.ai_processor - INFO - summarize_email:39 - Starting email summarization with OpenAI
+2025-10-24 22:42:27 - app.services.ai_processor - INFO - summarize_email:40 - Email length: 519 characters
+2025-10-24 22:42:27 - app.services.ai_processor - INFO - summarize_email:58 - Sending request to OpenAI...
+2025-10-24 22:43:20 - app.services.ai_processor - INFO - summarize_email:74 - Summarization complete in 52.80s
+2025-10-24 22:43:20 - app.services.ai_processor - INFO - summarize_email:75 - Summary length: 331 characters
+2025-10-24 22:43:20 - app.services.ai_processor - INFO - summarize_email:76 - ============================================================
+2025-10-24 22:43:20 - app.services.ai_processor - INFO - summarize_email:38 - ============================================================
+2025-10-24 22:43:20 - app.services.ai_processor - INFO - summarize_email:39 - Starting email summarization with OpenAI
+2025-10-24 22:43:20 - app.services.ai_processor - INFO - summarize_email:40 - Email length: 476 characters
+2025-10-24 22:43:20 - app.services.ai_processor - INFO - summarize_email:58 - Sending request to OpenAI...
+2025-10-24 22:43:49 - app.services.ai_processor - INFO - summarize_email:74 - Summarization complete in 28.65s
+2025-10-24 22:43:49 - app.services.ai_processor - INFO - summarize_email:75 - Summary length: 437 characters
+2025-10-24 22:43:49 - app.services.ai_processor - INFO - summarize_email:76 - ============================================================
+2025-10-24 22:43:49 - app.services.ai_processor - INFO - summarize_email:38 - ============================================================
+2025-10-24 22:43:49 - app.services.ai_processor - INFO - summarize_email:39 - Starting email summarization with OpenAI
+2025-10-24 22:43:49 - app.services.ai_processor - INFO - summarize_email:40 - Email length: 259 characters
+2025-10-24 22:43:49 - app.services.ai_processor - INFO - summarize_email:58 - Sending request to OpenAI...
+2025-10-24 22:44:11 - app.services.ai_processor - INFO - summarize_email:74 - Summarization complete in 22.65s
+2025-10-24 22:44:11 - app.services.ai_processor - INFO - summarize_email:75 - Summary length: 266 characters
+2025-10-24 22:44:11 - app.services.ai_processor - INFO - summarize_email:76 - ============================================================
+2025-10-24 22:44:11 - app.services.ai_processor - INFO - draft_reply_stream:108 - ============================================================
+2025-10-24 22:44:11 - app.services.ai_processor - INFO - draft_reply_stream:109 - Starting draft reply with streaming
+2025-10-24 22:44:11 - app.services.ai_processor - INFO - draft_reply_stream:110 - Reply for: John <john@accounting.com> - RE: Invoice #12345 - Payment Status
+2025-10-24 22:44:11 - app.services.ai_processor - INFO - draft_reply_stream:137 - Streaming reply from OpenAI...
+2025-10-24 22:45:00 - app.services.ai_processor - INFO - draft_reply_stream:159 - Draft reply streaming complete in 48.39s
+2025-10-24 22:45:00 - app.services.ai_processor - INFO - draft_reply_stream:160 - Total chunks: 210
+2025-10-24 22:45:00 - app.services.ai_processor - INFO - draft_reply_stream:161 - ============================================================
+2025-10-24 22:50:34 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized with OpenAI model: ai/llama3.2:1B-Q4_0
+2025-10-24 22:51:00 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 22:55:55 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 22:58:54 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:01:40 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:02:50 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:03:35 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:04:03 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:04:28 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:04:52 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:05:09 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:05:33 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:05:33 - app.services.ai_processor - INFO - summarize_email:39 - Starting email summarization with OpenAI
+2025-10-24 23:05:33 - app.services.ai_processor - INFO - summarize_email:40 - Email length: 519 characters
+2025-10-24 23:05:33 - app.services.ai_processor - INFO - summarize_email:58 - Sending request to OpenAI...
+2025-10-24 23:06:12 - app.services.ai_processor - INFO - summarize_email:74 - Summarization complete in 39.20s
+2025-10-24 23:06:12 - app.services.ai_processor - INFO - summarize_email:75 - Summary length: 277 characters
+2025-10-24 23:06:12 - app.services.ai_processor - INFO - summarize_email:76 - ============================================================
+2025-10-24 23:06:12 - app.services.ai_processor - INFO - summarize_email:39 - Starting email summarization with OpenAI
+2025-10-24 23:06:12 - app.services.ai_processor - INFO - summarize_email:40 - Email length: 476 characters
+2025-10-24 23:06:12 - app.services.ai_processor - INFO - summarize_email:58 - Sending request to OpenAI...
+2025-10-24 23:06:39 - app.services.ai_processor - INFO - summarize_email:74 - Summarization complete in 27.33s
+2025-10-24 23:06:39 - app.services.ai_processor - INFO - summarize_email:75 - Summary length: 180 characters
+2025-10-24 23:06:39 - app.services.ai_processor - INFO - summarize_email:76 - ============================================================
+2025-10-24 23:06:39 - app.services.ai_processor - INFO - summarize_email:39 - Starting email summarization with OpenAI
+2025-10-24 23:06:39 - app.services.ai_processor - INFO - summarize_email:40 - Email length: 259 characters
+2025-10-24 23:06:39 - app.services.ai_processor - INFO - summarize_email:58 - Sending request to OpenAI...
+2025-10-24 23:07:04 - app.services.ai_processor - INFO - summarize_email:74 - Summarization complete in 25.03s
+2025-10-24 23:07:04 - app.services.ai_processor - INFO - summarize_email:75 - Summary length: 301 characters
+2025-10-24 23:07:04 - app.services.ai_processor - INFO - summarize_email:76 - ============================================================
+2025-10-24 23:07:04 - app.services.ai_processor - INFO - draft_reply_stream:97 - ============================================================
+2025-10-24 23:07:04 - app.services.ai_processor - INFO - draft_reply_stream:98 - Starting draft reply with streaming
+2025-10-24 23:07:04 - app.services.ai_processor - INFO - draft_reply_stream:99 - Reply for: John <john@accounting.com> - RE: Invoice #12345 - Payment Status
+2025-10-24 23:07:39 - app.services.ai_processor - INFO - draft_reply_stream:148 - Draft reply streaming complete in 34.43s
+2025-10-24 23:07:39 - app.services.ai_processor - INFO - draft_reply_stream:149 - Total chunks: 155
+2025-10-24 23:07:39 - app.services.ai_processor - INFO - draft_reply_stream:150 - ============================================================
+2025-10-24 23:13:42 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:13:47 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:13:47 - app.services.ai_processor - INFO - summarize_email:39 - Starting email summarization with OpenAI
+2025-10-24 23:13:47 - app.services.ai_processor - INFO - summarize_email:40 - Email length: 519 characters
+2025-10-24 23:13:47 - app.services.ai_processor - INFO - summarize_email:58 - Sending request to OpenAI...
+2025-10-24 23:14:28 - app.services.ai_processor - INFO - summarize_email:74 - Summarization complete in 41.21s
+2025-10-24 23:14:28 - app.services.ai_processor - INFO - summarize_email:75 - Summary length: 305 characters
+2025-10-24 23:14:28 - app.services.ai_processor - INFO - summarize_email:76 - ============================================================
+2025-10-24 23:14:28 - app.services.ai_processor - INFO - draft_reply_stream:97 - ============================================================
+2025-10-24 23:14:28 - app.services.ai_processor - INFO - draft_reply_stream:98 - Starting draft reply with streaming
+2025-10-24 23:14:28 - app.services.ai_processor - INFO - draft_reply_stream:99 - Reply for: John <john@accounting.com> - RE: Invoice #12345 - Payment Status
+2025-10-24 23:15:07 - app.services.ai_processor - INFO - draft_reply_stream:148 - Draft reply streaming complete in 39.30s
+2025-10-24 23:15:07 - app.services.ai_processor - INFO - draft_reply_stream:149 - Total chunks: 188
+2025-10-24 23:15:07 - app.services.ai_processor - INFO - draft_reply_stream:150 - ============================================================
+2025-10-24 23:17:52 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:18:06 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 23:18:06 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 23:18:06 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 23:18:06 - app.services.ai_processor - INFO - preload_phi_model:296 - ============================================================
+2025-10-24 23:18:06 - app.services.ai_processor - INFO - preload_phi_model:297 - APPLICATION STARTUP - PRELOADING OPENAI CONNECTION
+2025-10-24 23:18:06 - app.services.ai_processor - INFO - preload_phi_model:298 - ============================================================
+2025-10-24 23:18:06 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 23:20:51 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:20:58 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:20:59 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 23:20:59 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 23:20:59 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 23:20:59 - app.services.ai_processor - INFO - preload_phi_model:326 - ============================================================
+2025-10-24 23:20:59 - app.services.ai_processor - INFO - preload_phi_model:327 - APPLICATION STARTUP - PRELOADING OPENAI CONNECTION
+2025-10-24 23:20:59 - app.services.ai_processor - INFO - preload_phi_model:328 - ============================================================
+2025-10-24 23:20:59 - app.services.ai_processor - INFO - warm_up:296 - Warming up local LLM...
+2025-10-24 23:20:59 - app.services.ai_processor - ERROR - warm_up:317 - Error during local LLM warm-up: 'AIProcessor' object has no attribute 'check_openai'
+2025-10-24 23:20:59 - app.services.ai_processor - INFO - warm_up:319 - Continuing without warm-up...
+2025-10-24 23:20:59 - app.services.ai_processor - INFO - preload_phi_model:332 - ============================================================
+2025-10-24 23:20:59 - app.services.ai_processor - INFO - preload_phi_model:333 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-24 23:20:59 - app.services.ai_processor - INFO - preload_phi_model:334 - ============================================================
+2025-10-24 23:20:59 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-24 23:21:00 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-24 23:21:16 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:21:25 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 23:21:25 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 23:21:25 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 23:21:25 - app.services.ai_processor - INFO - preload_phi_model:326 - ============================================================
+2025-10-24 23:21:25 - app.services.ai_processor - INFO - preload_phi_model:327 - APPLICATION STARTUP - PRELOADING OPENAI CONNECTION
+2025-10-24 23:21:25 - app.services.ai_processor - INFO - preload_phi_model:328 - ============================================================
+2025-10-24 23:21:25 - app.services.ai_processor - INFO - warm_up:296 - Warming up local LLM...
+2025-10-24 23:21:25 - app.services.ai_processor - ERROR - warm_up:317 - Error during local LLM warm-up: 'AIProcessor' object has no attribute 'check_openai'
+2025-10-24 23:21:25 - app.services.ai_processor - INFO - warm_up:319 - Continuing without warm-up...
+2025-10-24 23:21:25 - app.services.ai_processor - INFO - preload_phi_model:332 - ============================================================
+2025-10-24 23:21:25 - app.services.ai_processor - INFO - preload_phi_model:333 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-24 23:21:25 - app.services.ai_processor - INFO - preload_phi_model:334 - ============================================================
+2025-10-24 23:21:56 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-24 23:22:04 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-24 23:22:04 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-24 23:22:04 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-24 23:22:04 - app.services.ai_processor - INFO - preload_phi_model:326 - ============================================================
+2025-10-24 23:22:04 - app.services.ai_processor - INFO - preload_phi_model:327 - APPLICATION STARTUP - PRELOADING OPENAI CONNECTION
+2025-10-24 23:22:04 - app.services.ai_processor - INFO - preload_phi_model:328 - ============================================================
+2025-10-24 23:22:04 - app.services.ai_processor - INFO - warm_up:296 - Warming up local LLM...
+2025-10-24 23:22:04 - app.services.ai_processor - ERROR - warm_up:317 - Error during local LLM warm-up: 'AIProcessor' object has no attribute 'check_openai'
+2025-10-24 23:22:04 - app.services.ai_processor - INFO - warm_up:319 - Continuing without warm-up...
+2025-10-24 23:22:04 - app.services.ai_processor - INFO - preload_phi_model:332 - ============================================================
+2025-10-24 23:22:04 - app.services.ai_processor - INFO - preload_phi_model:333 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-24 23:22:04 - app.services.ai_processor - INFO - preload_phi_model:334 - ============================================================
+2025-10-25 09:37:43 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-25 09:37:56 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-25 09:37:56 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-25 09:37:56 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-25 09:37:56 - app.services.ai_processor - INFO - preload_phi_model:326 - ============================================================
+2025-10-25 09:37:56 - app.services.ai_processor - INFO - preload_phi_model:327 - APPLICATION STARTUP - PRELOADING OPENAI CONNECTION
+2025-10-25 09:37:56 - app.services.ai_processor - INFO - preload_phi_model:328 - ============================================================
+2025-10-25 09:37:56 - app.services.ai_processor - INFO - warm_up:296 - Warming up local LLM...
+2025-10-25 09:37:56 - app.services.ai_processor - ERROR - warm_up:317 - Error during local LLM warm-up: 'AIProcessor' object has no attribute 'check_openai'
+2025-10-25 09:37:56 - app.services.ai_processor - INFO - warm_up:319 - Continuing without warm-up...
+2025-10-25 09:37:56 - app.services.ai_processor - INFO - preload_phi_model:332 - ============================================================
+2025-10-25 09:37:56 - app.services.ai_processor - INFO - preload_phi_model:333 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-25 09:37:56 - app.services.ai_processor - INFO - preload_phi_model:334 - ============================================================
+2025-10-25 09:45:23 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-25 09:45:24 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-25 09:45:35 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-25 09:45:44 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-25 09:45:45 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-25 09:45:45 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-25 09:45:45 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-25 09:45:45 - app.services.ai_processor - INFO - preload_phi_model:326 - ============================================================
+2025-10-25 09:45:45 - app.services.ai_processor - INFO - preload_phi_model:327 - APPLICATION STARTUP - PRELOADING OPENAI CONNECTION
+2025-10-25 09:45:45 - app.services.ai_processor - INFO - preload_phi_model:328 - ============================================================
+2025-10-25 09:45:45 - app.services.ai_processor - INFO - warm_up:296 - Warming up local LLM...
+2025-10-25 09:45:45 - app.services.ai_processor - ERROR - warm_up:317 - Error during local LLM warm-up: 'AIProcessor' object has no attribute 'check_openai'
+2025-10-25 09:45:45 - app.services.ai_processor - INFO - warm_up:319 - Continuing without warm-up...
+2025-10-25 09:45:45 - app.services.ai_processor - INFO - preload_phi_model:332 - ============================================================
+2025-10-25 09:45:45 - app.services.ai_processor - INFO - preload_phi_model:333 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-25 09:45:45 - app.services.ai_processor - INFO - preload_phi_model:334 - ============================================================
+2025-10-25 09:51:10 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-25 09:51:10 - app.services.ai_processor - INFO - summarize_email:39 - Starting email summarization with OpenAI
+2025-10-25 09:51:10 - app.services.ai_processor - INFO - summarize_email:40 - Email length: 519 characters
+2025-10-25 09:51:10 - app.services.ai_processor - INFO - summarize_email:58 - Sending request to OpenAI...
+2025-10-25 09:51:43 - app.services.ai_processor - INFO - summarize_email:74 - Summarization complete in 33.25s
+2025-10-25 09:51:43 - app.services.ai_processor - INFO - summarize_email:75 - Summary length: 369 characters
+2025-10-25 09:51:43 - app.services.ai_processor - INFO - summarize_email:76 - ============================================================
+2025-10-25 09:51:43 - app.services.ai_processor - INFO - draft_reply_stream:97 - ============================================================
+2025-10-25 09:51:43 - app.services.ai_processor - INFO - draft_reply_stream:98 - Starting draft reply with streaming
+2025-10-25 09:51:43 - app.services.ai_processor - INFO - draft_reply_stream:99 - Reply for: John <john@accounting.com> - RE: Invoice #12345 - Payment Status
+2025-10-25 09:52:21 - app.services.ai_processor - INFO - draft_reply_stream:148 - Draft reply streaming complete in 38.00s
+2025-10-25 09:52:21 - app.services.ai_processor - INFO - draft_reply_stream:149 - Total chunks: 158
+2025-10-25 09:52:21 - app.services.ai_processor - INFO - draft_reply_stream:150 - ============================================================
+2025-10-25 09:57:47 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-25 10:00:08 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-25 10:00:39 - app.services.ai_processor - INFO - __init__:26 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-25 10:02:13 - app.services.ai_processor - INFO - __init__:27 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-25 10:03:30 - app.services.ai_processor - INFO - __init__:39 - AIProcessor initialized: ai/llama3.2:1B-Q4_0 (no timeout)
+2025-10-25 10:04:01 - app.services.ai_processor - INFO - __init__:39 - AIProcessor initialized: ai/llama3.2:1B-Q4_0 (no timeout)
+2025-10-25 10:04:10 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-25 10:04:10 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-25 10:04:10 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-25 10:04:10 - app.services.ai_processor - INFO - preload_phi_model:339 - ============================================================
+2025-10-25 10:04:10 - app.services.ai_processor - INFO - preload_phi_model:340 - APPLICATION STARTUP - PRELOADING OPENAI CONNECTION
+2025-10-25 10:04:10 - app.services.ai_processor - INFO - preload_phi_model:341 - ============================================================
+2025-10-25 10:04:10 - app.services.ai_processor - INFO - warm_up:309 - Warming up local LLM...
+2025-10-25 10:04:10 - app.services.ai_processor - ERROR - warm_up:330 - Error during local LLM warm-up: 'AIProcessor' object has no attribute 'check_openai'
+2025-10-25 10:04:10 - app.services.ai_processor - INFO - warm_up:332 - Continuing without warm-up...
+2025-10-25 10:04:10 - app.services.ai_processor - INFO - preload_phi_model:345 - ============================================================
+2025-10-25 10:04:10 - app.services.ai_processor - INFO - preload_phi_model:346 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-25 10:04:10 - app.services.ai_processor - INFO - preload_phi_model:347 - ============================================================
+2025-10-25 10:04:51 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-25 10:04:52 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-25 10:05:34 - app.services.ai_processor - INFO - __init__:39 - AIProcessor initialized: ai/llama3.2:1B-Q4_0 (no timeout)
+2025-10-25 10:05:42 - app.services.ai_processor - INFO - __init__:39 - AIProcessor initialized: ai/llama3.2:1B-Q4_0 (no timeout)
+2025-10-25 10:05:44 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-25 10:05:44 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-25 10:05:44 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-25 10:05:44 - app.services.ai_processor - INFO - preload_phi_model:339 - ============================================================
+2025-10-25 10:05:44 - app.services.ai_processor - INFO - preload_phi_model:340 - APPLICATION STARTUP - PRELOADING OPENAI CONNECTION
+2025-10-25 10:05:44 - app.services.ai_processor - INFO - preload_phi_model:341 - ============================================================
+2025-10-25 10:05:44 - app.services.ai_processor - INFO - warm_up:309 - Warming up local LLM...
+2025-10-25 10:05:44 - app.services.ai_processor - ERROR - warm_up:330 - Error during local LLM warm-up: 'AIProcessor' object has no attribute 'check_openai'
+2025-10-25 10:05:44 - app.services.ai_processor - INFO - warm_up:332 - Continuing without warm-up...
+2025-10-25 10:05:44 - app.services.ai_processor - INFO - preload_phi_model:345 - ============================================================
+2025-10-25 10:05:44 - app.services.ai_processor - INFO - preload_phi_model:346 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-25 10:05:44 - app.services.ai_processor - INFO - preload_phi_model:347 - ============================================================
+2025-10-25 10:05:44 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-25 10:05:44 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-25 10:07:11 - app.services.ai_processor - INFO - __init__:27 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-25 10:07:17 - app.services.ai_processor - INFO - __init__:27 - AIProcessor initialized: ai/llama3.2:1B-Q4_0
+2025-10-25 10:07:19 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-25 10:07:19 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-25 10:07:19 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-25 10:07:19 - app.services.ai_processor - INFO - preload_phi_model:327 - ============================================================
+2025-10-25 10:07:19 - app.services.ai_processor - INFO - preload_phi_model:328 - APPLICATION STARTUP - PRELOADING OPENAI CONNECTION
+2025-10-25 10:07:19 - app.services.ai_processor - INFO - preload_phi_model:329 - ============================================================
+2025-10-25 10:07:19 - app.services.ai_processor - INFO - warm_up:297 - Warming up local LLM...
+2025-10-25 10:07:19 - app.services.ai_processor - ERROR - warm_up:318 - Error during local LLM warm-up: 'AIProcessor' object has no attribute 'check_openai'
+2025-10-25 10:07:19 - app.services.ai_processor - INFO - warm_up:320 - Continuing without warm-up...
+2025-10-25 10:07:19 - app.services.ai_processor - INFO - preload_phi_model:333 - ============================================================
+2025-10-25 10:07:19 - app.services.ai_processor - INFO - preload_phi_model:334 - STARTUP COMPLETE - READY TO PROCESS EMAILS
+2025-10-25 10:07:19 - app.services.ai_processor - INFO - preload_phi_model:335 - ============================================================
+2025-10-25 10:07:19 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-25 10:07:19 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-25 10:08:44 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-25 10:08:44 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-25 10:08:44 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-25 10:08:45 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-25 10:09:16 - app.services.scheduler - INFO - start_scheduler:120 - Scheduled: Check due tasks (every minute)
+2025-10-25 10:09:16 - app.services.scheduler - INFO - start_scheduler:129 - Scheduled: Generate daily summaries (midnight UTC / 1 AM WAT)
+2025-10-25 10:09:16 - app.services.scheduler - INFO - start_scheduler:132 - Task scheduler started successfully with all jobs
+2025-10-25 10:09:16 - app.services.scheduler - INFO - shutdown_scheduler:142 - Task scheduler shutdown successfully
+2025-10-25 10:09:17 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-25 10:10:18 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
+2025-10-25 10:10:18 - app.services.scheduler - ERROR - shutdown_scheduler:144 - Error shutting down scheduler: Scheduler is not running
