@@ -14,8 +14,9 @@ class Meeting(Base):
     title = Column(String, nullable=False)
     start_time = Column(DateTime, nullable=False)
     end_time = Column(DateTime, nullable=True)
-    status = Column(String, default="scheduled")
+    status = Column(String, default="scheduled")  # scheduled, active, completed, failed, finalizing
     is_manual = Column(Boolean, default=False)
+    last_activity = Column(DateTime, default=datetime.utcnow)  # For grace period tracking
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
@@ -50,6 +51,8 @@ class MeetingSummary(Base):
     decisions = Column(Text, nullable=True)
     action_items = Column(JSON, nullable=True)
     follow_ups = Column(Text, nullable=True)
+    summary_unavailable = Column(Boolean, default=False)
+    error_message = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     
     # Relationships

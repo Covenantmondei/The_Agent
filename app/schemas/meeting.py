@@ -3,11 +3,9 @@ from datetime import datetime
 from typing import Optional, List
 
 
-class MeetingCreate(BaseModel):
-    meet_link: str
-    title: str
-    start_time: datetime
-    end_time: Optional[datetime] = None
+class MeetingJoinRequest(BaseModel):
+    meet_url: str
+    title: Optional[str] = "Untitled Meeting"
 
 
 class MeetingResponse(BaseModel):
@@ -18,7 +16,7 @@ class MeetingResponse(BaseModel):
     title: str
     start_time: datetime
     end_time: Optional[datetime]
-    status: str
+    status: str  # scheduled, active, completed, failed
     is_manual: bool
     created_at: datetime
     
@@ -42,6 +40,7 @@ class MeetingSummaryResponse(BaseModel):
     decisions: Optional[str]
     action_items: Optional[List[str]]
     follow_ups: Optional[str]
+    summary_unavailable: bool = False
     created_at: datetime
     
     class Config:
@@ -51,3 +50,11 @@ class MeetingSummaryResponse(BaseModel):
 class LiveMeetingResponse(BaseModel):
     active_meetings: List[MeetingResponse]
     upcoming_meetings: List[MeetingResponse]
+
+
+class MeetingSessionResponse(BaseModel):
+    session_id: int
+    meet_url: str
+    websocket_url: str
+    status: str
+    message: str
