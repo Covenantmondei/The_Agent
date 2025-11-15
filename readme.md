@@ -68,7 +68,7 @@ cd AI_Agent
 
 # Create virtual environment
 python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\Activate.ps1
+source venv/bin/activate  # On Windows: venv\Scripts\Activate.ps1
 
 # Install dependencies
 pip install --upgrade pip
